@@ -1,0 +1,49 @@
+import { FaRegCalendarXmark } from "react-icons/fa6";
+import {useGetLeaves} from "../features/leave/useGetLeaves";
+import FullScreenSpinner from "../ui/FullScreenSpinner";
+import Table from "../ui/Table";
+import { differenceInDays, extractDate } from "../utils/helper";
+
+const columns = [
+  {key: "name", label: "Applied by"},
+  {key: "appliedOn", label: "Applied On"},
+  {key: "onLeave", label: "On Leave"},
+  {key: "duration", label: "Duration"},
+  {key: "status", label: "Status"},
+]
+
+const formatData = (el) => {
+  const {firstName, lastName, status, createdAt, startDate, endDate} = el;
+ 
+  return {
+    name: firstName + " " + lastName,
+    duration: differenceInDays(startDate, endDate)+1,
+    appliedOn: extractDate(new Date(createdAt)),
+    status,
+    onLeave: extractDate(new Date(startDate)) + " to " + extractDate(new Date(endDate))
+  }
+}
+
+function EmployeesLeaves() {
+  const {getLeaves, isLoading} = useGetLeaves();
+
+  if (isLoading || !getLeaves.data) {
+    return <FullScreenSpinner />
+  }
+
+  const data = getLeaves.data.map(el => formatData(el));
+
+  return (
+    <>
+      <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
+        <FaRegCalendarXmark className="h-10 w-10 sm:h-8 sm:w-8" /> Employee
+        Leaves
+      </h1>
+      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5">
+        <Table columns={columns} data={data} text="All Leaves" />
+      </div>
+    </>
+  );
+}
+
+export default EmployeesLeaves;
