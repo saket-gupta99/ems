@@ -82,15 +82,26 @@ salaryRouter.post(
         0
       );
 
+      let sundayCount = 0;
+      for (
+        let i = startDate.getTime();
+        i <= endDate.getTime();
+        i += 24 * 60 * 60 * 1000
+      ) {
+        if (new Date(i).getDay() === 0) sundayCount++;
+      }
+
       const totalDays = new Date(year, month, 0).getDate();
-      const presentDays = employeeAttendance.length + paidLeave;
+      const presentDays = employeeAttendance.length + paidLeave + sundayCount;
       const absentDays = totalDays - presentDays;
 
       const dailySalary = employee.general.basicSalary / totalDays;
       const deduction =
         (absentDays + extraLeavesTakenFromEarnedLeave) * dailySalary;
       const grossSalary =
-        employee.general.basicSalary + Number(allowances) + Number(bonus);
+        employee.general.basicSalary +
+        Number(allowances || 0) +
+        Number(bonus || 0);
       const netSalary = grossSalary - deduction;
 
       if (employee.general.totalLeavesAllowed < 0) {

@@ -1,10 +1,5 @@
 import { useGetAttendance } from "../features/attendance/useGetAttendance";
-import {
-  extractDate,
-  formatDataForTable,
-  formatDateToISO,
-  tableColumns,
-} from "../utils/helper";
+import { extractDate, extractTime, formatDateToISO } from "../utils/helper";
 import FullScreenSpinner from "../ui/FullScreenSpinner";
 import SearchBar from "../ui/SearchBar";
 import Table from "../ui/Table";
@@ -12,6 +7,34 @@ import { useGetAllEmployees } from "../features/employee/useGetAllEmployees";
 import { useState } from "react";
 import SearchByDate from "../ui/SearchByDate";
 import { MdCoPresent } from "react-icons/md";
+
+function formatDataForTable(el) {
+  const { employeeId, firstName, lastName, checkIn, checkOut, attendance } = el;
+  const name = firstName + " " + lastName;
+
+  const istDateCheckIn = new Date(checkIn);
+  const istDateCheckOut = checkOut ? new Date(checkOut) : null;
+
+  return {
+    employeeId,
+    name,
+    date: extractDate(istDateCheckIn),
+    checkInTime: extractTime(istDateCheckIn),
+    checkOutTime: istDateCheckOut
+      ? extractTime(istDateCheckOut)
+      : "Not Checked Out",
+    attendance,
+  };
+}
+
+const tableColumns = [
+  { key: "date", label: "Date" },
+  { key: "employeeId", label: "Employee ID" },
+  { key: "name", label: "Name" },
+  { key: "checkInTime", label: "Check-in Time" },
+  { key: "checkOutTime", label: "Check-out Time" },
+  { key: "attendance", label: "Status" },
+];
 
 function EmployeesAttendance() {
   const [search, setSearch] = useState("");

@@ -10,8 +10,8 @@ export function useAttachment() {
     isPending,
   } = useMutation({
     mutationFn: ({ data }) => uploadFileAPI({ data }),
-    onSuccess: () => {
-      toast.success("File/Image uploaded successfully");
+    onSuccess: (data) => {
+      toast.success(data.message || "File/Image uploaded successfully");
       queryClient.invalidateQueries(["user"]);
     },
     onError: (err) => {

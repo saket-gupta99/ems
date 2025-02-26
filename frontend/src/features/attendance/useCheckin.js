@@ -7,8 +7,8 @@ export function useCheckin() {
 
   const { mutate: checkIn, isLoading } = useMutation({
     mutationFn: ({ data }) => checkinAPI({ data }),
-    onSuccess: () => {
-      toast.success("Attendance for today taken");
+    onSuccess: (data) => {
+      toast.success(data.message || "Attendance for today taken");
       queryClient.invalidateQueries(["getAttendance"]);
     },
     onError: (err) => {

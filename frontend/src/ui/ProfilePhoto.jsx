@@ -12,7 +12,7 @@ function ProfilePhoto({ img, name, setPhotoClicked }) {
         alt="profile-photo"
         className="rounded-full h-28 w-28 xs:h-36 xs:w-36 mx-auto"
       />
-      <h3 className="text-lg pt-3">{name || "user"}</h3>
+      <h3 className="text-lg pt-3 capitalize">{name || "user"}</h3>
     </div>
   );
 }

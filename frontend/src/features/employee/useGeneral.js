@@ -9,8 +9,8 @@ export function useGeneral() {
     error,
   } = useMutation({
     mutationFn: ({ data }) => getUserGeneralData({ data }),
-    onSuccess: () => {
-      toast.success("General data updated successfully");
+    onSuccess: (data) => {
+      toast.success(data.message || "General data updated successfully");
     },
     onError: (err) => {
       toast.error(err.message || "Updating user's general data Failed!");

@@ -6,8 +6,8 @@ export function useReviewLeave() {
   const queryClient = useQueryClient();
   const { mutate: reviewLeave, isLoading } = useMutation({
     mutationFn: ({ data }) => reviewLeaveAPI({ data }),
-    onSuccess: () => {
-      toast.success("Leave reviewed successfully");
+    onSuccess: (data) => {
+      toast.success(data.message || "Leave reviewed successfully");
       queryClient.invalidateQueries(["getLeaves"])
     },
     onError: (err) => {

@@ -7,8 +7,8 @@ export function useCheckout() {
 
   const { mutate: checkOut, isLoading } = useMutation({
     mutationFn: ({ data }) => checkoutAPI({ data }),
-    onSuccess: () => {
-      toast.success("checkout successfull");
+    onSuccess: (data) => {
+      toast.success(data.message || "checkout successfull");
       queryClient.invalidateQueries(["getAttendance"]);
     },
     onError: (err) => {

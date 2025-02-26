@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 export function useApplyLeave() {
   const { mutate: applyLeave, isLoading } = useMutation({
     mutationFn: ({ data }) => applyLeaveAPI({ data }),
-    onSuccess: () => {
-      toast.success("Leave applied");
+    onSuccess: (data) => {
+      toast.success(data.message || "Leave applied");
     },
     onError: (err) => {
       toast.error(err.message || "Applying leave failed!");

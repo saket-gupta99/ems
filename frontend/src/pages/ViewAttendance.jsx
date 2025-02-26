@@ -4,11 +4,26 @@ import { useUser } from "../features/authentication/useUser";
 import FullScreenSpinner from "../ui/FullScreenSpinner";
 import Table from "../ui/Table";
 import SortButtons from "../ui/SortButtons";
-import {
-  formatDataForTable,
-  tableColumns,
-} from "../utils/helper";
 import { MdGridView } from "react-icons/md";
+import { extractDate, extractTime } from "../utils/helper";
+
+const tableColumns = [
+  { key: "date", label: "Date" },
+  { key: "checkIn", label: "Check-in Time" },
+  { key: "checkOut", label: "Check-out Time" },
+  { key: "attendance", label: "Status" },
+];
+
+function formatDataForTable(el) {
+  const { date, checkIn, checkOut, attendance } = el;
+  return {
+    date: extractDate(new Date(date)),
+    checkIn: extractTime(new Date(checkIn)),
+    checkOut:
+      checkOut !== null ? extractTime(new Date(checkOut)) : "Not Checked out",
+    attendance,
+  };
+}
 
 function ViewAttendance() {
   const [selectedDays, setSelectedDays] = useState(0);

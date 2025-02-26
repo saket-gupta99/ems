@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 export function useSignup() {
   const { mutate: signup, isLoading } = useMutation({
     mutationFn: ({ data }) => signupAPI({ data }),
-    onSuccess: () => {
-      toast.success("Added employee successfully!");
+    onSuccess: (data) => {
+      toast.success(data.message || "Added employee successfully!");
     },
     onError: (err) => {
       toast.error(err.message || "Failed to add an employee");

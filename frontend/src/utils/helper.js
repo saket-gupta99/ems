@@ -20,32 +20,3 @@ export const differenceInDays = (startDate, endDate) => {
   );
 };
 
-export function formatDataForTable(el) {
-  const { employeeId, firstName, lastName, checkIn, checkOut, attendance } = el;
-  const name = firstName + " " + lastName;
-
-  const istDateCheckIn = new Date(checkIn);
-  const istDateCheckOut = checkOut ? new Date(checkOut) : null;
-
-  return {
-    employeeId,
-    name,
-    date: extractDate(istDateCheckIn),
-    checkInTime: extractTime(istDateCheckIn),
-    checkOutTime: istDateCheckOut
-      ? extractTime(istDateCheckOut)
-      : "Not Checked Out",
-    attendance,
-  };
-}
-
-export const tableColumns = [
-  { key: "date", label: "Date" },
-  { key: "employeeId", label: "Employee ID" },
-  { key: "name", label: "Name" },
-  { key: "checkInTime", label: "Check-in Time" },
-  { key: "checkOutTime", label: "Check-out Time" },
-  { key: "attendance", label: "Status" },
-];
-
-
