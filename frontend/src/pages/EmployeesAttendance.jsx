@@ -9,7 +9,15 @@ import SearchByDate from "../ui/SearchByDate";
 import { MdCoPresent } from "react-icons/md";
 
 function formatDataForTable(el) {
-  const { employeeId, firstName, lastName, checkIn, checkOut, attendance } = el;
+  const {
+    employeeId,
+    firstName,
+    lastName,
+    checkIn,
+    checkOut,
+    attendance,
+    locationName,
+  } = el;
   const name = firstName + " " + lastName;
 
   const istDateCheckIn = new Date(checkIn);
@@ -24,6 +32,7 @@ function formatDataForTable(el) {
       ? extractTime(istDateCheckOut)
       : "Not Checked Out",
     attendance,
+    locationName: locationName ? locationName : "-",
   };
 }
 
@@ -34,6 +43,7 @@ const tableColumns = [
   { key: "checkInTime", label: "Check-in Time" },
   { key: "checkOutTime", label: "Check-out Time" },
   { key: "attendance", label: "Status" },
+  { key: "locationName", label: "Assigned Location" },
 ];
 
 function EmployeesAttendance() {
@@ -72,6 +82,7 @@ function EmployeesAttendance() {
         date: extractDate(new Date(date)),
         checkInTime: "-",
         checkOutTime: "-",
+        locationName: "-"
       }))
       .filter((el) => !presentEmployeeIds.has(el.employeeId));
 
@@ -84,6 +95,7 @@ function EmployeesAttendance() {
     ? getAttendance.data
         .filter((el) => el.employeeId === search)
         .map((el) => formatDataForTable(el))
+        .reverse()
     : [];
 
   return (
@@ -91,7 +103,7 @@ function EmployeesAttendance() {
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
         <MdCoPresent className="h-10 w-10 sm:h-8 sm:w-8" /> Employees Attendance
       </h1>
-      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5">
+      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5 min-h-screen">
         <SearchByDate date={date} setDate={setDate} />
         <SearchBar search={search} setSearch={setSearch} />
         {search && searchedEmployee.length > 0 && (

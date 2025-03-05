@@ -1,4 +1,5 @@
 const express = require("express");
+const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -9,7 +10,6 @@ const { sendOTP, sendRegistrationMsg } = require("../utils/emailServices");
 const validateSignupInput = require("../utils/validateSignupInput");
 const { handleErrors } = require("../utils/helper");
 const adminMiddleware = require("../middlewares/adminMiddleware");
-const validator = require("validator");
 
 const authRouter = express.Router();
 
@@ -67,6 +67,7 @@ authRouter.post("/signup", userAuth, adminMiddleware, async (req, res) => {
         isVerified: false,
         basicSalary,
         totalLeavesAllowed,
+        role: "employee",
       },
       bankDetails: {
         name: bankName,

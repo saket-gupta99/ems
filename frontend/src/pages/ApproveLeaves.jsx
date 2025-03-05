@@ -23,7 +23,7 @@ function ApproveLeaves() {
 
         return (
           el.status === "pending" &&
-          startDate.getTime() === today.getTime() - 24 * 60 * 60 * 1000
+          startDate.getTime() < today.getTime()
         );
       });
 

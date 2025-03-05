@@ -26,6 +26,7 @@ import SetPassword from "./features/authentication/SetPassword";
 import SalarySlip from "./pages/SalarySlip";
 import ViewLeave from "./pages/ViewLeave";
 import Home from "./pages/Home";
+import AddLocation from "./pages/AddLocation";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ export default function App() {
           >
             <Route index element={<Navigate replace to="profile" />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="add-location" element={<AddLocation />} />
             <Route path="manage-attendance" element={<ManageAttendance />} />
             <Route path="view-attendance" element={<ViewAttendance />} />
             <Route

@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 const cors = require("cors");
+const locationRouter = require("./routes/LocationRouter");
 
 const PORT = process.env.PORT || 5000;
 const FRONTEND_URL = "http://localhost:5173";
@@ -45,3 +46,4 @@ app.use("/api", attendanceRouter);
 app.use("/api", leaveRouter);
 app.use("/api", uploadRouter);
 app.use("/api", salaryRouter);
+app.use("/api", locationRouter);

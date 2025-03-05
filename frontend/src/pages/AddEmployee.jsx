@@ -14,7 +14,6 @@ function AddEmployee() {
     designation: "",
     email: "",
     dateOfJoining: "",
-    role: "",
     employeeId: "EMP",
     reference: "",
     basicSalary: "",
@@ -32,7 +31,7 @@ function AddEmployee() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    
+
     if (Object.keys(errors).length > 0) {
       return toast.error("Fix form errors before submitting.");
     }
@@ -48,7 +47,6 @@ function AddEmployee() {
             designation: "",
             email: "",
             dateOfJoining: "",
-            role: "",
             employeeId: "EMP",
             reference: "",
             basicSalary: "",
@@ -87,12 +85,26 @@ function AddEmployee() {
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
         <IoIosAddCircle className="h-10 w-10 sm:h-8 sm:w-8" /> Add an Employee
       </h1>
-      <div className="w-full flex flex-col items-center p-5 shadow-2xl">
+      <div className="w-full flex flex-col items-center p-5 shadow-2xl min-h-screen">
         <form
           className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 pt-5"
           onSubmit={handleSubmit}
         >
           <div>
+            <label>
+              Employee ID*:{" "}
+              <input
+                type="text"
+                name="employeeId"
+                className="w-full border border-gray-400 p-1 mb-2"
+                value={formData.employeeId || ""}
+                onChange={handleChange}
+                required
+              />{" "}
+            </label>
+            {errors?.employeeId && (
+              <p className="block text-red-500">{errors.employeeId}</p>
+            )}
             <label>
               First Name*:{" "}
               <input
@@ -161,26 +173,6 @@ function AddEmployee() {
                 required
               />
             </label>
-            <label className="block sm:flex items-center w-full p-1">
-              Role*:
-              <div className="w-full">
-                {["admin", "employee"].map((option) => {
-                  return (
-                    <label key={option} className="sm:pl-4 p-1">
-                      <input
-                        type="radio"
-                        name="role"
-                        value={option}
-                        checked={formData.role === option}
-                        onChange={handleChange}
-                        required
-                      />{" "}
-                      {option}
-                    </label>
-                  );
-                })}
-              </div>
-            </label>
           </div>
 
           <div>
@@ -219,20 +211,6 @@ function AddEmployee() {
                 onChange={handleChange}
               />{" "}
             </label>
-            <label>
-              Employee ID*:{" "}
-              <input
-                type="text"
-                name="employeeId"
-                className="w-full border border-gray-400 p-1 mb-2"
-                value={formData.employeeId || ""}
-                onChange={handleChange}
-                required
-              />{" "}
-            </label>
-            {errors?.employeeId && (
-              <p className="block text-red-500">{errors.employeeId}</p>
-            )}
             <label>
               Bank Name:{" "}
               <input

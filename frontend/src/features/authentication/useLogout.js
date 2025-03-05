@@ -9,8 +9,7 @@ export function useLogout() {
 
   const { mutate: logout, isLoading } = useMutation({
     mutationFn: logoutAPI,
-    onSuccess: (data) => {
-      toast.success(data.message);
+    onSuccess: () => {
       queryClient.removeQueries();
       navigate("/home", { replace: true });
     },

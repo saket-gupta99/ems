@@ -1,6 +1,21 @@
 const PDFDocument = require("pdfkit");
 const Salary = require("../models/Salary");
 
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 async function generatePaySlip(employeeId, payrollMonth) {
   const salary = await Salary.findOne({ employeeId, payrollMonth });
   if (!salary) throw new Error("Salary record not found");
@@ -36,7 +51,9 @@ async function generatePaySlip(employeeId, payrollMonth) {
       doc.moveDown(0.5);
       doc
         .fontSize(12)
-        .text(`For the month of ${month} ${year}`, { align: "center" });
+        .text(`For the month of ${months[month - 1]} ${year}`, {
+          align: "center",
+        });
 
       doc.moveDown(1.5);
 

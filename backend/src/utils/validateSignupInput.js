@@ -8,7 +8,6 @@ const validateSignupInput = (data) => {
     phone,
     email,
     dateOfJoining,
-    role,
     employeeId,
     basicSalary,
     totalLeavesAllowed,
@@ -19,7 +18,6 @@ const validateSignupInput = (data) => {
   if (!phone) errors.phone = "Phone is required";
   if (!email) errors.email = "Email is required";
   if (!dateOfJoining) errors.dateOfJoining = "Date of joining is required";
-  if (!role) errors.role = "Role is required";
   if (!employeeId) errors.employeeId = "Employee ID is required";
   if (!basicSalary) errors.basicSalary = "Basic salary is required";
 
@@ -28,9 +26,6 @@ const validateSignupInput = (data) => {
   }
   if (email && !validator.isEmail(email)) {
     errors.email = "Enter a valid email";
-  }
-  if (role && !["employee", "admin"].includes(role)) {
-    errors.role = "Invalid role";
   }
   if (totalLeavesAllowed && !Number(totalLeavesAllowed)) {
     errors.totalLeavesAllowed = "totalLeavesAllowed should be number";

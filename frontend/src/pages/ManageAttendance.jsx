@@ -6,6 +6,7 @@ import { useCheckout } from "../features/attendance/useCheckout";
 import FullScreenSpinner from "../ui/FullScreenSpinner";
 import toast from "react-hot-toast";
 import { FaRegPenToSquare } from "react-icons/fa6";
+import { convertToIst } from "../utils/helper";
 
 function ManageAttendance() {
   const { isLoading, error, getLocation, location } = useGeolocation();
@@ -36,7 +37,7 @@ function ManageAttendance() {
 
     return checkIn({
       data: {
-        date: new Date().setUTCHours(0,0,0,0),
+        date: convertToIst(new Date()).setUTCHours(0,0,0,0),
         latitude: location.latitude,
         longitude: location.longitude,
       },
@@ -56,7 +57,7 @@ function ManageAttendance() {
     });
   }
 
-  const today = new Date();
+  const today = convertToIst(new Date());
   
   today.setUTCHours(0, 0, 0, 0);
   const userAttendance = getAttendance.data.find((el) => {
@@ -73,7 +74,7 @@ function ManageAttendance() {
 
   return (
     <>
-      <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
+      <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center ">
         <FaRegPenToSquare className="h-5 w-5 sm:h-8 sm:w-8" /> Manage Attendance
       </h1>
 

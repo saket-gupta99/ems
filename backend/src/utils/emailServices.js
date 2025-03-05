@@ -32,15 +32,15 @@ const sendRegistrationMsg = async (email) => {
   });
 };
 
-const sendApproveLeaveMsg = async (email, startDate, endDate) => {
+const sendLeaveMsg = async (email, startDate, endDate, action) => {
   await transporter.sendMail({
     from: process.env.SMTP_USER,
     to: email,
     subject: "Leave Approved",
     text: `Your leave between ${extractDate(startDate)} to ${extractDate(
       endDate
-    )} has been approved`,
+    )} has been ${action}`,
   });
 };
 
-module.exports = { sendOTP, sendRegistrationMsg, sendApproveLeaveMsg };
+module.exports = { sendOTP, sendRegistrationMsg, sendLeaveMsg };

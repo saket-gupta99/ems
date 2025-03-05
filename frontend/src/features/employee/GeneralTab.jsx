@@ -44,10 +44,12 @@ function GeneralTab() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(formData)
 
     if (Object.keys(errors).length > 0) return;
 
     const {
+      employeeId,
       phone,
       dateOfJoining,
       dateOfLeaving,
@@ -58,6 +60,7 @@ function GeneralTab() {
 
     return general({
       data: {
+        employeeId,
         phone,
         dateOfJoining,
         dateOfLeaving,

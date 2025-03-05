@@ -12,10 +12,11 @@ const columns = [
   { key: "designation", label: "Designation" },
   { key: "email", label: "Email" },
   { key: "phone", label: "Phone No." },
+  {key: "isVerified", label: "Is Verified"}
 ];
 
 const formdatData = (el) => {
-  const { firstName, lastName, employeeId, email, phone, designation } =
+  const { firstName, lastName, employeeId, email, phone, designation, isVerified } =
     el.general;
 
   return {
@@ -24,6 +25,7 @@ const formdatData = (el) => {
     designation,
     email,
     phone,
+    isVerified: isVerified ? "Yes" : "No"
   };
 };
 
@@ -56,7 +58,7 @@ function EmployeeList() {
         <FaList className="h-10 w-10 sm:h-8 sm:w-8" />
         Employee List
       </h1>
-      <div className="grid grid-cols-1 w-full shadow-2xl p-5">
+      <div className="grid grid-cols-1 w-full shadow-2xl p-5 min-h-screen">
         <Table columns={columns} data={data} onClick={handleOpen} />
       </div>
       {openDialog && (

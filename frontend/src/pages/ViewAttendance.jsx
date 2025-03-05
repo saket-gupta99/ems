@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { useGetAttendance } from "../features/attendance/useGetAttendance";
 import { useUser } from "../features/authentication/useUser";
 import FullScreenSpinner from "../ui/FullScreenSpinner";
@@ -11,17 +11,17 @@ const tableColumns = [
   { key: "date", label: "Date" },
   { key: "checkIn", label: "Check-in Time" },
   { key: "checkOut", label: "Check-out Time" },
-  { key: "attendance", label: "Status" },
+  { key: "locationName", label: "Assigned Location" },
 ];
 
 function formatDataForTable(el) {
-  const { date, checkIn, checkOut, attendance } = el;
+  const { date, checkIn, checkOut, locationName } = el;
   return {
     date: extractDate(new Date(date)),
     checkIn: extractTime(new Date(checkIn)),
     checkOut:
       checkOut !== null ? extractTime(new Date(checkOut)) : "Not Checked out",
-    attendance,
+    locationName: locationName ? locationName : "-",
   };
 }
 
@@ -39,7 +39,7 @@ function ViewAttendance() {
     today.setUTCHours(0, 0, 0, 0);
 
     const startDate = new Date();
-    startDate.setDate(today.getDate() - selectedDays);
+    selectedDays > 1 && startDate.setDate(today.getDate() - selectedDays + 1);
     startDate.setUTCHours(0, 0, 0, 0);
 
     const attendance = getAttendance?.data
@@ -53,7 +53,8 @@ function ViewAttendance() {
           el.employeeId === user?.data?.general.employeeId
         );
       })
-      .map((el) => formatDataForTable(el));
+      .map((el) => formatDataForTable(el))
+      .reverse();
 
     return attendance;
   }
@@ -65,7 +66,7 @@ function ViewAttendance() {
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
         <MdGridView className="h-5 w-5 sm:h-8 sm:w-8" /> View Attendance
       </h1>
-      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5">
+      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5 min-h-screen">
         <SortButtons
           setSelectedDays={setSelectedDays}
           selectedDays={selectedDays}

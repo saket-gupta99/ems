@@ -1,8 +1,12 @@
-import { useState } from "react";
-const TABLE_ROWS = 10;
+import { useEffect, useState } from "react";
+const TABLE_ROWS = 7;
 
-function Table({ columns, data, text, onClick }) {
+function Table({ columns, data, text, onClick = () => {} }) {
   const [currentPage, setcurrentPage] = useState(1);
+
+  useEffect(() => {
+    setcurrentPage(1);
+  }, [data]);
 
   const totalPages = data?.length > 0 ? Math.ceil(data.length / TABLE_ROWS) : 0;
   const modifiedData = data?.length
@@ -58,27 +62,29 @@ function Table({ columns, data, text, onClick }) {
       {totalPages > 1 && (
         <>
           <button
-            className="px-3 py-1 disabled:bg-gray-300 hover:cursor-pointer"
+            className="px-3 py-1 disabled:bg-gray-300 disabled:cursor-not-allowed hover:cursor-pointer"
             onClick={prevPage}
             disabled={currentPage === 1}
           >
-            prev
+            Prev
           </button>
           {pageButtons.map((page) => (
             <button
               key={page}
-              className="px-3 py-1 hover:cursor-pointer"
+              className={`px-3 py-1 hover:cursor-pointer ${
+                currentPage === page ? "bg-blue-400" : ""
+              }`}
               onClick={() => setcurrentPage(page)}
             >
               {page}
             </button>
           ))}
           <button
-            className="px-3 py-1 disabled:bg-gray-300 hover:cursor-pointer"
+            className="px-3 py-1 disabled:bg-gray-300 disabled:cursor-not-allowed hover:cursor-pointer"
             onClick={nextPage}
             disabled={currentPage === totalPages}
           >
-            next
+            Next
           </button>
         </>
       )}

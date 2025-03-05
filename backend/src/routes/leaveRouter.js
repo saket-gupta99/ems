@@ -5,7 +5,7 @@ const adminMiddleware = require("../middlewares/adminMiddleware");
 const { handleErrors, toIST } = require("../utils/helper");
 const Leave = require("../models/Leave");
 const Employee = require("../models/Employee");
-const { sendApproveLeaveMsg } = require("../utils/emailServices");
+const { sendLeaveMsg } = require("../utils/emailServices");
 
 const leaveRouter = express.Router();
 
@@ -72,9 +72,8 @@ leaveRouter.post("/leave/apply", userAuth, async (req, res) => {
 
     const remainingLeaves = employee.general.totalLeavesAllowed;
     const difference =
-      Math.floor(
-        (toIST(endDate) - toIST(startDate)) / (24 * 60 * 60 * 1000)
-      ) + 1;
+      Math.floor((toIST(endDate) - toIST(startDate)) / (24 * 60 * 60 * 1000)) +
+      1;
 
     if (leaveType.toLowerCase() === "earned leave" && remainingLeaves <= 0) {
       return res.status(403).json({
@@ -111,6 +110,7 @@ leaveRouter.post("/leave/apply", userAuth, async (req, res) => {
       employeeId,
       startDate: { $lte: toIST(endDate) },
       endDate: { $gte: toIST(startDate) },
+      $or: [{ status: "approved" }, { status: "pending" }],
     });
 
     if (existingLeave) {
@@ -184,7 +184,7 @@ leaveRouter.patch(
       }
       await employee.save();
 
-      sendApproveLeaveMsg(employee.general.email, startDate, endDate);
+      sendLeaveMsg(employee.general.email, startDate, endDate, action);
 
       res.status(200).json({ message: "reviewed", data: leaveExists });
     } catch (err) {

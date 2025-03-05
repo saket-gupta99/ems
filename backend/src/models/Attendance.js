@@ -77,6 +77,16 @@ const attendanceSchema = new mongoose.Schema(
       // },
       default: null,
     },
+    location: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Location",
+      required: true,
+    },
+    locationName: {
+      type: String,
+      ref: "Location",
+      required: true
+    }
   },
   { timestamps: true }
 );

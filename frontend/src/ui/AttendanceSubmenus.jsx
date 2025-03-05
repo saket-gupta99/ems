@@ -1,4 +1,4 @@
-import { MdCoPresent, MdGridView } from "react-icons/md";
+import { MdCoPresent, MdGridView, MdAddLocationAlt } from "react-icons/md";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import SingleNav from "./SingleNav";
 import { useUser } from "../features/authentication/useUser";
@@ -30,6 +30,13 @@ function AttendanceSubmenus() {
           text="Employee Attendance"
           icon={<MdCoPresent />}
           path="employees-attendance"
+        />
+      )}
+      {role === "admin" && (
+        <SingleNav
+          text="Add Location"
+          icon={<MdAddLocationAlt />}
+          path="add-location"
         />
       )}
     </div>

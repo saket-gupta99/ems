@@ -1,14 +1,15 @@
 const express = require("express");
 const Attendance = require("../models/Attendance");
 const Leave = require("../models/Leave");
+const Location = require("../models/Location");
 const userAuth = require("../middlewares/auth");
-const { handleErrors, haversineDistance, toIST } = require("../utils/helper");
 const Employee = require("../models/Employee");
+const { handleErrors, haversineDistance, toIST } = require("../utils/helper");
 
 const attendanceRouter = express.Router();
 
-const LATITUDE = 19.248037;
-const LONGITUDE = 72.872021;
+const LATITUDE = 19.1761324;
+const LONGITUDE = 72.8520058;
 
 attendanceRouter.get("/attendance", userAuth, async (req, res) => {
   try {
@@ -38,8 +39,25 @@ attendanceRouter.post("/attendance/checkin", userAuth, async (req, res) => {
       return res.status(400).json({ message: "Location is required" });
     }
 
-    const officeLat = LATITUDE;
-    const officeLon = LONGITUDE;
+    const employee = await Employee.findOne({
+      "general.employeeId": employeeId,
+    });
+    if (!employee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    const existsInLocation = await Location.findOne({
+      employees: { $in: [employee._id] },
+      isActive: true,
+    });
+
+    if (!existsInLocation)
+      return res
+        .status(400)
+        .json({ message: "You are not assigned to any location" });
+
+    const officeLat = existsInLocation.latitude;
+    const officeLon = existsInLocation.longitude;
 
     const distance = haversineDistance(
       officeLat,
@@ -65,13 +83,6 @@ attendanceRouter.post("/attendance/checkin", userAuth, async (req, res) => {
       return res
         .status(400)
         .json({ message: "Enter today's date for " + employeeId });
-    }
-
-    const employee = await Employee.findOne({
-      "general.employeeId": employeeId,
-    });
-    if (!employee) {
-      return res.status(404).json({ message: "Employee not found" });
     }
 
     const existingAttendance = await Attendance.findOne({
@@ -108,11 +119,13 @@ attendanceRouter.post("/attendance/checkin", userAuth, async (req, res) => {
       date: toIST(date),
       attendance: "present",
       checkIn: toIST(),
+      location: existsInLocation._id,
+      locationName: existsInLocation.locationName,
     });
 
     const data = await attendanceInstance.save();
 
-    res.status(201).json({ message: "Attendance added successfully", data });
+    res.status(201).json({ message: "Check-in done", data });
   } catch (err) {
     handleErrors(err, res);
   }
@@ -122,8 +135,26 @@ attendanceRouter.patch("/attendance/checkout", userAuth, async (req, res) => {
   try {
     const { employeeId } = req.user.general;
     const { latitude, longitude } = req.body;
-    const officeLat = LATITUDE;
-    const officeLon = LONGITUDE;
+
+    const employee = await Employee.findOne({
+      "general.employeeId": employeeId,
+    });
+    if (!employee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    const existsInLocation = await Location.findOne({
+      employees: { $in: [employee._id] },
+      isActive: true,
+    });
+
+    if (!existsInLocation)
+      return res
+        .status(400)
+        .json({ message: "You are not assigned to any location" });
+
+    const officeLat = existsInLocation.latitude;
+    const officeLon = existsInLocation.longitude;
 
     if (!employeeId) {
       return res.status(400).json({ message: "Employee Id is required" });
@@ -143,7 +174,7 @@ attendanceRouter.patch("/attendance/checkout", userAuth, async (req, res) => {
     if (distance > 100) {
       return res
         .status(403)
-        .json({ message: "You are outside the allowed check-in radius" });
+        .json({ message: "You are outside the allowed check-out radius" });
     }
 
     const today = toIST();
@@ -171,7 +202,7 @@ attendanceRouter.patch("/attendance/checkout", userAuth, async (req, res) => {
     }
 
     res.status(200).json({
-      message: "checkout updated successfully",
+      message: "Check-out done",
       data: updatedAttendance,
     });
   } catch (err) {
