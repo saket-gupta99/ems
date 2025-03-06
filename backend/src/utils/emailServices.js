@@ -36,7 +36,7 @@ const sendLeaveMsg = async (email, startDate, endDate, action) => {
   await transporter.sendMail({
     from: process.env.SMTP_USER,
     to: email,
-    subject: "Leave Approved",
+    subject: "Leave Status",
     text: `Your leave between ${extractDate(startDate)} to ${extractDate(
       endDate
     )} has been ${action}`,

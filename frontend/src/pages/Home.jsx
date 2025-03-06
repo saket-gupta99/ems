@@ -90,6 +90,7 @@ function Home() {
                 <a
                   href="https://www.indiamart.com/siinfratech/"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   KNOW MORE
                 </a>

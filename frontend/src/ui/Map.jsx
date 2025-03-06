@@ -1,16 +1,18 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import "leaflet.gridlayer.googlemutant";
 
-function Map({children, lat, lng}) {
+function Map({ children, lat, lng }) {
   return (
     <MapContainer
-      center={!lat || !lng ? [19.054999, 72.8692035] : [lat,lng]}
+      center={!lat && !lng ? [19.054999, 72.8692035] : [lat, lng]}
       zoom={13}
       style={{ height: "500px", width: "100%" }}
     >
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+        subdomains={["mt0", "mt1", "mt2", "mt3"]}
+        attribution='© <a href="https://www.google.com/maps" target="_blank">Google Maps</a>'
       />
       {children}
     </MapContainer>
@@ -18,3 +20,8 @@ function Map({children, lat, lng}) {
 }
 
 export default Map;
+
+// lyrs=m → Standard roadmap
+// lyrs=s → Satellite
+// lyrs=p → Terrain
+// lyrs=h → Hybrid

@@ -88,11 +88,12 @@ function AddLocation() {
   function LocationMarker() {
     useMapEvents({
       click: (e) => {
-        setLocation((prev) => ({
-          ...prev,
-          latitude: e.latlng.lat,
-          longitude: e.latlng.lng,
-        }));
+        !selectedLocation.latitude &&
+          setLocation((prev) => ({
+            ...prev,
+            latitude: e.latlng.lat,
+            longitude: e.latlng.lng,
+          }));
       },
     });
 
@@ -122,7 +123,7 @@ function AddLocation() {
       longitude: "",
     });
     setAddedEmployees([]);
-    setOpen(false);
+    setOpen();
   }
 
   function handleRemoveLocation() {
@@ -141,10 +142,6 @@ function AddLocation() {
     setOpen(true);
   }
 
-  console.log(
-    "added: " + addedEmployees + " already: " + alreadyAddedEmployees
-  );
-
   return (
     <>
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
@@ -160,7 +157,7 @@ function AddLocation() {
               </span>
               {allLocations.map((item) => (
                 <div
-                  className="p-2 bg-blue-500 m-1 font-semibold rounded text-white cursor-pointer"
+                  className="p-2 bg-blue-500 m-1 font-semibold rounded text-white cursor-pointer text-center"
                   key={item._id}
                   onClick={() => {
                     setSelectedLocation(item);
@@ -174,7 +171,7 @@ function AddLocation() {
             <div className="">
               <span className="text-lg font-semibold pl-2"></span>
               <div
-                className="p-2 m-1 rounded bg-green-500 font-semibold text-white cursor-pointer"
+                className="p-2 m-1 rounded bg-green-500 font-semibold text-white cursor-pointer text-center"
                 onClick={handleAddNewLocation}
               >
                 Add New Location
@@ -196,7 +193,7 @@ function AddLocation() {
                   onChange={(e) =>
                     setLocation({ ...location, locationName: e.target.value })
                   }
-                  disabled={selectedLocation.locationName}
+                  disabled={!!selectedLocation.locationName}
                 />
               </label>
               <label>
@@ -205,7 +202,7 @@ function AddLocation() {
                   type="number"
                   className="w-full border border-gray-400 p-1 mb-2 disabled:bg-gray-200 disabled:cursor-not-allowed capitalize"
                   value={location.latitude || selectedLocation.latitude || ""}
-                  disabled={selectedLocation.latitude}
+                  disabled={!!selectedLocation.latitude}
                   readOnly
                 />
               </label>
@@ -215,7 +212,7 @@ function AddLocation() {
                   type="number"
                   className="w-full border border-gray-400 p-1 mb-2 disabled:bg-gray-200 disabled:cursor-not-allowed capitalize"
                   value={location.longitude || selectedLocation.longitude || ""}
-                  disabled={selectedLocation.longitude}
+                  disabled={!!selectedLocation.longitude}
                   readOnly
                 />
               </label>
