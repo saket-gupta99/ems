@@ -33,7 +33,7 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {import.meta.env.REACT_ENV === "PRODUCTION" && <ReactQueryDevtools initialIsOpen={false} />}
+      {import.meta.env.REACT_ENV !== "PRODUCTION" && <ReactQueryDevtools initialIsOpen={false} />}
       <Router>
         <Routes>
           <Route
