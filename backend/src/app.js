@@ -21,7 +21,7 @@ const locationRouter = require("./routes/LocationRouter");
 
 const PORT = process.env.PORT || 5000;
 // const FRONTEND_URL = "http://localhost:5173";
-const FRONTEND_URL = "https://siinfratechems.netlify.app/";
+const FRONTEND_URL = "https://siinfratechems.netlify.app";
 
 app.use(
   cors({
