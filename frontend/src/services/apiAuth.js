@@ -13,7 +13,7 @@ export async function signup({ data }) {
   const result = await res.json();
 
   if (!res.ok) {
-    console.error(result.message);
+    console.error(result.message.errors);
     throw new Error(result.message);
   }
 

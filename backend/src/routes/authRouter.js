@@ -249,8 +249,8 @@ authRouter.patch("/logout", userAuth, async (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // false in dev, true in production
-      // sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // lax in dev
-      sameSite: "None",
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // lax in dev
+      // sameSite: "None",
     });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {

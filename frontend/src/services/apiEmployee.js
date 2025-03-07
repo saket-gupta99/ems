@@ -40,8 +40,8 @@ export async function getUserPersonalData({ data }) {
 
   const result = await res.json();
   if (!res.ok) {
-    console.error(result.message || "Error updating user's personal data!");
-    throw new Error(result.message || "Error updating user's personal data!");
+    console.error(result.message.errors || "Error updating user's personal data!");
+    throw new Error(result.message.errors || "Error updating user's personal data!");
   }
   return result;
 }
@@ -72,8 +72,8 @@ export async function getUserContactData({ data }) {
 
   const result = await res.json();
   if (!res.ok) {
-    console.error(result.message || "Error updating user's contact data!");
-    throw new Error(result.message || "Error updating user's contact data!");
+    console.error(result.message.errors || "Error updating user's contact data!");
+    throw new Error(result.message.errors || "Error updating user's contact data!");
   }
   return result;
 }

@@ -73,6 +73,13 @@ function EmployeeDetails({ employee }) {
 
   return (
     <div className="overflow-auto p-2 flex-grow max-h-[95vh]">
+      <button
+        type="button"
+        className="sm:col-start-2 sm:place-self-end place-self-center w-25 flex gap-2 justify-center items-center bg-red-500 text-white p-2 rounded mt-5 sm:mt-2 cursor-pointer"
+        onClick={() => handleDeactivateEmployee(employee.general.employeeId)}
+      >
+        Remove {employee.general.firstName + " " + employee.general.lastName}
+      </button>
       <div className="mb-5">
         <h2 className="text-xl font-semibold text-center">General Section</h2>
         <form
@@ -249,15 +256,6 @@ function EmployeeDetails({ employee }) {
             </label>
           </div>
           <SaveButton />
-          <button
-            className="sm:col-start-2 sm:place-self-end place-self-center w-25 flex gap-2 justify-center items-center bg-red-500 text-white p-2 rounded mt-5 sm:mt-2 cursor-pointer"
-            onClick={() =>
-              handleDeactivateEmployee(employee.general.employeeId)
-            }
-          >
-            Remove{" "}
-            {employee.general.firstName + " " + employee.general.lastName}
-          </button>
         </form>
       </div>
 

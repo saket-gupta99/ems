@@ -16,12 +16,12 @@ const tableColumns = [
 ];
 
 function GeneratedSlips() {
-  const { getSalary, isLoading } = useGetSalaryData();
+  const { getSalaryData, isLoading } = useGetSalaryData();
 
   if (isLoading) return <FullScreenSpinner />;
 
-  const data = getSalary.data
-    ? getSalary.data.map((el) => ({
+  const data = getSalaryData?.data
+    ? getSalaryData.data.map((el) => ({
         ...el,
         deduction: el.deduction ? el.deduction.toFixed(2) : 0,
         netSalary: el.netSalary ? el.netSalary.toFixed(2) : 0,
@@ -29,6 +29,7 @@ function GeneratedSlips() {
         allowances: el.allowances ? el.allowances.toFixed(2) : 0,
       }))
     : [];
+    console.log(getSalaryData)
 
   return (
     <>
