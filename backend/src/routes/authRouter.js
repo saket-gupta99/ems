@@ -88,7 +88,7 @@ authRouter.post("/register", async (req, res) => {
   try {
     const { email, employeeId } = req.body;
     if (!email || !employeeId) {
-      res.status(400).json({ message: "Enter both fields" });
+      return res.status(400).json({ message: "Enter both fields" });
     }
 
     const employee = await Employee.findOne({
@@ -98,7 +98,7 @@ authRouter.post("/register", async (req, res) => {
     });
 
     if (!employee) {
-      res.status(400).json({ message: "Invalid employee id or email" });
+      return res.status(400).json({ message: "Invalid employee id or email" });
     }
 
     const otp = generateOtp();

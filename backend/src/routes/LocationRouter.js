@@ -119,7 +119,7 @@ locationRouter.patch(
       const { locationId, employee, action } = req.body;
 
       if (!["add", "remove"].includes(action))
-        res.status(400).json({ message: "Invalid action" });
+        return res.status(400).json({ message: "Invalid action" });
 
       const employeeAlreadyInOtherLocation = await Location.findOne({
         employees: { $in: [employee] },

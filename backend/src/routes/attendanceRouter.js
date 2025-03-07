@@ -8,9 +8,6 @@ const { handleErrors, haversineDistance, toIST } = require("../utils/helper");
 
 const attendanceRouter = express.Router();
 
-const LATITUDE = 19.1761324;
-const LONGITUDE = 72.8520058;
-
 attendanceRouter.get("/attendance", userAuth, async (req, res) => {
   try {
     const data = await Attendance.find({})

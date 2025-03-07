@@ -75,7 +75,7 @@ function ManageAttendance() {
   return (
     <>
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center ">
-        <FaRegPenToSquare className="h-5 w-5 sm:h-8 sm:w-8" /> Manage Attendance
+        <FaRegPenToSquare className="h-10 w-10 sm:h-8 sm:w-8" /> Manage Attendance
       </h1>
 
       <div className="shadow-2xl flex flex-col justify-center p-10">

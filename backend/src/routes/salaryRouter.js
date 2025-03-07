@@ -139,7 +139,7 @@ salaryRouter.get("/salary", userAuth, async (req, res) => {
     const data = await Salary.find({ employeeId });
 
     if (!data.length)
-      res.status(404).json({ message: "No salary record found" });
+      return res.status(404).json({ message: "No salary record found" });
 
     res.status(200).json({ message: "salary data fetched successfully", data });
   } catch (err) {
