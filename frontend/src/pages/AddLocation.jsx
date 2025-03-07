@@ -2,6 +2,7 @@ import { MdAddLocationAlt } from "react-icons/md";
 import { useGetAllEmployees } from "../features/employee/useGetAllEmployees";
 import FullScreenSpinner from "../ui/FullScreenSpinner";
 import Map from "../ui/Map";
+import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
@@ -100,6 +101,7 @@ function AddLocation() {
     return (location.latitude && location.longitude) ||
       (selectedLocation.latitude && selectedLocation.longitude) ? (
       <Marker
+        key={`${location.latitude}-${location.longitude}`}
         position={
           location.latitude && location.longitude
             ? [location.latitude, location.longitude]

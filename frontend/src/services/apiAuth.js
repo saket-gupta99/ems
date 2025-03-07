@@ -122,3 +122,18 @@ export async function logout() {
   }
   return data;
 }
+
+export async function deacitvateEmployee({data}) {
+  const res = await fetch(`${API_URL}/api/deactivate-user`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(data)
+  });
+  const result = res.json();
+  if (!res.ok) {
+    console.log(result.message || "Error deactivating out!");
+    throw new Error(result.message || "Error deactivating out!");
+  }
+  return result;
+}

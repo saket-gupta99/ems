@@ -5,6 +5,7 @@ import { useGeneral } from "../features/employee/useGeneral";
 import FullScreenSpinner from "../ui/FullScreenSpinner";
 import { FaFilePdf, FaFileWord, FaFileAlt } from "react-icons/fa";
 import { useBankDetails } from "../features/employee/useBankDetails";
+import { useDeactivateUser } from "../features/authentication/useDeactivateUser";
 
 const getFileIcon = (url) => {
   if (/\.pdf$/i.test(url))
@@ -33,6 +34,7 @@ function EmployeeDetails({ employee }) {
   });
   const { general, isLoading } = useGeneral();
   const { bankDetails, isLoading: isLoading2 } = useBankDetails();
+  const { deactivateEmployee, isLoading: isLoading3 } = useDeactivateUser();
 
   useEffect(() => {
     if (employee.general) {
@@ -43,7 +45,7 @@ function EmployeeDetails({ employee }) {
     }
   }, [employee]);
 
-  if (isLoading || isLoading2) return <FullScreenSpinner />;
+  if (isLoading || isLoading2 || isLoading3) return <FullScreenSpinner />;
 
   function handleChange(e) {
     setGeneralFormData({ ...generalFormData, [e.target.name]: e.target.value });
@@ -63,6 +65,10 @@ function EmployeeDetails({ employee }) {
   function handleGeneralSubmit(e) {
     e.preventDefault();
     general({ data: generalFormData });
+  }
+
+  function handleDeactivateEmployee(id) {
+    deactivateEmployee({ data: { employeeId: id } });
   }
 
   return (
@@ -243,6 +249,15 @@ function EmployeeDetails({ employee }) {
             </label>
           </div>
           <SaveButton />
+          <button
+            className="sm:col-start-2 sm:place-self-end place-self-center w-25 flex gap-2 justify-center items-center bg-red-500 text-white p-2 rounded mt-5 sm:mt-2 cursor-pointer"
+            onClick={() =>
+              handleDeactivateEmployee(employee.general.employeeId)
+            }
+          >
+            Remove{" "}
+            {employee.general.firstName + " " + employee.general.lastName}
+          </button>
         </form>
       </div>
 

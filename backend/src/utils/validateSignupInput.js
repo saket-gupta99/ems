@@ -24,6 +24,9 @@ const validateSignupInput = (data) => {
   if (phone && !validator.isMobilePhone(phone, "en-IN")) {
     errors.phone = "Enter a valid phone number";
   }
+  if (employeeId && employeeId === "EMP") {
+    errors.employeeId = "employee id should contain EMP followed by a number";
+  }
   if (email && !validator.isEmail(email)) {
     errors.email = "Enter a valid email";
   }

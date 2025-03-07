@@ -39,7 +39,7 @@ function UpdatePhoto({ setPhotoClicked }) {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-1000000 p-2">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-100000 p-2">
       <div className="bg-white shadow-xl rounded-md w-full max-w-md">
         <div className="relative">
           <h2 className="bg-black text-white p-2 sm:text-center text-left text-xl sm:text-2xl font-bold">
@@ -56,7 +56,12 @@ function UpdatePhoto({ setPhotoClicked }) {
             alt="profile-photo"
             className="w-40 h-40 rounded-full mx-auto border"
           />
-          <h2 className="mt-2 text-lg sm:text-xl font-semibold">Upload Picture</h2>
+          <h2 className="mt-2 text-lg sm:text-xl font-semibold">
+            Upload Picture
+          </h2>
+          <span className="text-xs sm:text-sm text-slate-500">
+            jpg, jpeg, png image upto 2MB is allowed
+          </span>
         </div>
         <div className="flex flex-col sm:flex-row gap-1 w-full justify-between border border-t-2 pt-2">
           <input
@@ -65,7 +70,7 @@ function UpdatePhoto({ setPhotoClicked }) {
             onChange={handleFileChange}
           />
           <button
-            className="bg-blue-500 text-white py-2 text-lg cursor-pointer"
+            className="bg-blue-500 text-white py-2 sm:px-4 text-lg cursor-pointer"
             onClick={handleUpdate}
           >
             Update

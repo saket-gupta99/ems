@@ -62,7 +62,7 @@ function EmployeeList() {
         <Table columns={columns} data={data} onClick={handleOpen} />
       </div>
       {openDialog && (
-        <div className="bg-gray-900/80 z-1000 h-screen fixed inset-0 grid place-items-center">
+        <div className="bg-gray-900/80 z-10000 h-screen fixed inset-0 grid place-items-center">
           <div className="bg-white shadow-xl rounded-md w-full max-w-[85%] h-[95%] p-2 relative flex flex-col">
             <RxCross1
               className="absolute right-0 top-0 h-8 w-8 hover:cursor-pointer"

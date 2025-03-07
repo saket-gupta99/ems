@@ -27,6 +27,7 @@ const EmployeesLeaves = lazy(() => import("./pages/EmployeesLeaves"));
 const ApproveLeaves = lazy(() => import("./pages/ApproveLeaves"));
 const SetPassword = lazy(() => import("./features/authentication/SetPassword"));
 const SalarySlip = lazy(() => import("./pages/SalarySlip"));
+const GeneratedSlips = lazy(() => import("./pages/GeneratedSlips"));
 const ViewLeave = lazy(() => import("./pages/ViewLeave"));
 const AddLocation = lazy(() => import("./pages/AddLocation"));
 const EmployeeList = lazy(() => import("./pages/EmployeeList"));
@@ -65,6 +66,7 @@ export default function App() {
               <Route path="employees-leaves" element={<EmployeesLeaves />} />
               <Route path="add-salary" element={<AddSalary />} />
               <Route path="salary-slip" element={<SalarySlip />} />
+              <Route path="generated-slips" element={<GeneratedSlips />} />
               <Route path="add-employee" element={<AddEmployee />} />
               <Route path="employee-list" element={<EmployeeList />} />
             </Route>
@@ -80,7 +82,7 @@ export default function App() {
       <Toaster
         position="top-center"
         gutter={12}
-        containerStyle={{ margin: "8px" }}
+        containerStyle={{ margin: "8px", zIndex: "1000000" }}
         toastOptions={{
           success: { duration: 3000 },
           error: { duration: 5000 },

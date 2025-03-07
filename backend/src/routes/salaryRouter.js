@@ -133,13 +133,9 @@ salaryRouter.post(
   }
 );
 
-salaryRouter.get("/salary", userAuth, async (req, res) => {
+salaryRouter.get("/salary", userAuth, adminMiddleware, async (req, res) => {
   try {
-    const { employeeId } = req.body;
-    const data = await Salary.find({ employeeId });
-
-    if (!data.length)
-      return res.status(404).json({ message: "No salary record found" });
+    const data = await Salary.find();
 
     res.status(200).json({ message: "salary data fetched successfully", data });
   } catch (err) {

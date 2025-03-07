@@ -42,7 +42,7 @@ authRouter.post("/signup", userAuth, adminMiddleware, async (req, res) => {
     } = req.body;
 
     const existingEmployee = await Employee.findOne({
-      employeeId,
+      "general.employeeId": employeeId,
       $or: [{ "general.email": email }, { "general.phone": phone }],
     });
 
@@ -205,6 +205,7 @@ authRouter.post("/login", async (req, res) => {
 
     const employee = await Employee.findOne({
       $or: [{ "general.employeeId": employeeId }, { "general.email": email }],
+      "general.isVerified": true,
     });
 
     if (!employee) {
@@ -243,18 +244,43 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
-authRouter.post("/logout", userAuth, async (req, res) => {
+authRouter.patch("/logout", userAuth, async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // false in dev, true in production
-      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // lax in dev
+      // sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // lax in dev
+      sameSite: "None",
     });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
     handleErrors(err, res);
   }
 });
+
+authRouter.post(
+  "/deactivate-user",
+  userAuth,
+  adminMiddleware,
+  async (req, res) => {
+    try {
+      const { employeeId } = req.body;
+      const employee = await Employee.findOne({
+        "general.employeeId": employeeId,
+        "general.isVerified": true,
+      });
+      if (!employee)
+        return res.status(404).json({ message: "employee not found" });
+
+      employee.general.isVerified = false;
+      employee.general.employeeId = "DEL-" + employee.general.employeeId;
+      await employee.save({ validateModifiedOnly: true });
+      res.status(200).json({ message: "User inactivated" });
+    } catch (err) {
+      handleErrors(err, res);
+    }
+  }
+);
 
 authRouter.post("/reset-password", userAuth, async (req, res) => {
   try {

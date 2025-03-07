@@ -37,7 +37,7 @@ function SalarySlip() {
             <input
               type="text"
               name="payrollMonth"
-              className="border p-1 ml-1"
+              className="border p-1 ml-1 w-full sm:w-fit"
               placeholder="give value like 'MM-YYYY'"
               value={payrollMonth || ""}
               onChange={(e) => setPayrollMonth(e.target.value)}

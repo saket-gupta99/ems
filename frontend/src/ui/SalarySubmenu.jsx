@@ -1,5 +1,6 @@
 import SingleNav from "./SingleNav";
 import { MdRequestPage } from "react-icons/md";
+import { FaMoneyBills } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { useUser } from "../features/authentication/useUser";
 import FullScreenSpinner from "./FullScreenSpinner";
@@ -15,6 +16,14 @@ function SalarySubmenu({ setSidebarOpen }) {
           text="Add salary"
           icon={<IoMdAdd />}
           path="add-salary"
+          setSidebarOpen={setSidebarOpen}
+        />
+      )}
+      {user.data.general.role === "admin" && (
+        <SingleNav
+          text="Generated Slips"
+          icon={<FaMoneyBills />}
+          path="generated-slips"
           setSidebarOpen={setSidebarOpen}
         />
       )}
