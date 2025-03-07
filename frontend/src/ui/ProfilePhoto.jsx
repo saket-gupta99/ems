@@ -10,9 +10,9 @@ function ProfilePhoto({ img, name, setPhotoClicked }) {
       <img
         src={img || "user.webp"}
         alt="profile-photo"
-        className="rounded-full h-32 w-32 xs:h-36 xs:w-36 mx-auto"
+        className="rounded-full h-36 w-36 mx-auto"
       />
-      <h3 className="text-xl pt-3 capitalize">{name || "user"}</h3>
+      <h3 className="text-2xl pt-3 capitalize">{name || "user"}</h3>
     </div>
   );
 }

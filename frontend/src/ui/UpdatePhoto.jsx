@@ -54,18 +54,18 @@ function UpdatePhoto({ setPhotoClicked }) {
           <img
             src={user?.data.general.photoUrl}
             alt="profile-photo"
-            className="sm:w-40 sm:h-40 h-36 w-36 rounded-full mx-auto border"
+            className="w-40 h-40 rounded-full mx-auto border"
           />
-          <h2 className="mt-2 font-medium text-lg sm:text-xl">Upload Picture</h2>
+          <h2 className="mt-2 text-lg sm:text-xl font-semibold">Upload Picture</h2>
         </div>
         <div className="flex flex-col sm:flex-row gap-1 w-full justify-between border border-t-2 pt-2">
           <input
             type="file"
-            className="border sm:py-5 sm:px-6 text-lg cursor-pointer"
+            className="border sm:py-2 py-4 sm:px-6 text-lg cursor-pointer"
             onChange={handleFileChange}
           />
           <button
-            className="bg-blue-500 text-white sm:py-5 text-lg cursor-pointer"
+            className="bg-blue-500 text-white py-4 sm:py-2 text-lg cursor-pointer"
             onClick={handleUpdate}
           >
             Update
