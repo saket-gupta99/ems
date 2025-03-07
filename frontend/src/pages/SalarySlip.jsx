@@ -26,7 +26,7 @@ function SalarySlip() {
       </h1>
       <div className="w-full p-5 shadow-2xl flex items-center justify-center">
         <form
-          className="flex flex-col w-full justify-center space-y-1.5 sm:min-h-100"
+          className="flex flex-col justify-center space-y-1.5"
           onSubmit={handleSubmit}
         >
           <h1 className="text-xl font-semibold text-center my-5">

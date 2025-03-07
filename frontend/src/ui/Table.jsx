@@ -27,9 +27,9 @@ function Table({ columns, data, text, onClick = () => {} }) {
   };
 
   return (
-    <div className=" col-span-3 w-full mx-auto sm:mt-12 mb-32 my-10">
+    <div className=" col-span-3 w-full overflow-x-auto mx-auto sm:mt-12 mb-32 my-10">
       <h1 className="text-xl font-semibold mb-2 text-center ">{text}</h1>
-      <table className="w-full border border-gray-300 text-left overflow-x-auto">
+      <table className="w-full border border-gray-300 text-left">
         <thead className="bg-gray-200">
           <tr>
             {columns?.map((col, index) => (

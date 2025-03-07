@@ -61,11 +61,11 @@ function UpdatePhoto({ setPhotoClicked }) {
         <div className="flex flex-col sm:flex-row gap-1 w-full justify-between border border-t-2 pt-2">
           <input
             type="file"
-            className="border sm:py-2 py-4 sm:px-6 text-lg cursor-pointer"
+            className="border py-2  sm:px-6 text-lg cursor-pointer"
             onChange={handleFileChange}
           />
           <button
-            className="bg-blue-500 text-white py-4 sm:py-2 text-lg cursor-pointer"
+            className="bg-blue-500 text-white py-2 text-lg cursor-pointer"
             onClick={handleUpdate}
           >
             Update
