@@ -244,7 +244,7 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
-authRouter.patch("/logout", userAuth, async (req, res) => {
+authRouter.post("/logout", userAuth, async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
@@ -258,7 +258,7 @@ authRouter.patch("/logout", userAuth, async (req, res) => {
   }
 });
 
-authRouter.post(
+authRouter.patch(
   "/deactivate-user",
   userAuth,
   adminMiddleware,

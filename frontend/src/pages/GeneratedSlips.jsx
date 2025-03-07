@@ -29,7 +29,6 @@ function GeneratedSlips() {
         allowances: el.allowances ? el.allowances.toFixed(2) : 0,
       }))
     : [];
-    console.log(getSalaryData)
 
   return (
     <>
@@ -37,7 +36,7 @@ function GeneratedSlips() {
         <FaMoneyBills className="h-10 w-10 sm:h-8 sm:w-8" /> Generated Slips
       </h1>
       <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5 min-h-screen sm:min-h-fit">
-        {data.length > 1 && (
+        {data.length > 0 && (
           <Table columns={tableColumns} data={data} text="All Slips" />
         )}
         {!data.length && <Table text="No Record Found" />}

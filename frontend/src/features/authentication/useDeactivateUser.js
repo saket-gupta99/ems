@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export function useDeactivateUser() {
   const queryClient = useQueryClient();
-  const { mutate: deacitvateEmployee, isLoading } = useMutation({
+  const { mutate: deactivateEmployee, isLoading } = useMutation({
     mutationFn: ({ data }) => deactivateEmployeeAPI({ data }),
     onSuccess: (data) => {
       toast.success(data.message);
@@ -13,5 +13,5 @@ export function useDeactivateUser() {
     onError: (err) => toast.error(err.message),
   });
 
-  return { deacitvateEmployee, isLoading };
+  return { deactivateEmployee, isLoading };
 }
