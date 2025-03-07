@@ -27,44 +27,42 @@ function Table({ columns, data, text, onClick = () => {} }) {
   };
 
   return (
-    <>
-      <div className="overflow-x-auto col-span-3 w-full mx-auto sm:mt-12 mb-32 my-10">
-        <h1 className="text-xl font-semibold mb-2 text-center">{text}</h1>
-        <table className="w-full border border-gray-300 text-left">
-          <thead className="bg-gray-200">
-            <tr>
-              {columns?.map((col, index) => (
-                <th key={index} className="border border-gray-300 p-2">
-                  {col.label}
-                </th>
+    <div className=" col-span-3 w-full mx-auto sm:mt-12 mb-32 my-10">
+      <h1 className="text-xl font-semibold mb-2 text-center ">{text}</h1>
+      <table className="w-full border border-gray-300 text-left overflow-x-auto">
+        <thead className="bg-gray-200">
+          <tr>
+            {columns?.map((col, index) => (
+              <th key={index} className="border border-gray-300 p-2">
+                {col.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+
+        <tbody>
+          {modifiedData?.map((row, rowIndex) => (
+            <tr
+              key={rowIndex}
+              className="hover:bg-gray-100"
+              onClick={() => onClick(row.employeeId)}
+            >
+              {columns.map((col, colIndex) => (
+                <td
+                  key={colIndex}
+                  className="border border-gray-300 p-2 capitalize"
+                >
+                  {row[col.key]}
+                </td>
               ))}
             </tr>
-          </thead>
-
-          <tbody>
-            {modifiedData?.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className="hover:bg-gray-100"
-                onClick={() => onClick(row.employeeId)}
-              >
-                {columns.map((col, colIndex) => (
-                  <td
-                    key={colIndex}
-                    className="border border-gray-300 p-2 capitalize"
-                  >
-                    {row[col.key]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
       {totalPages > 1 && (
         <>
           <button
-            className="px-3 py-1.5 bg-gray-300 disabled:bg-gray-500 disabled:cursor-not-allowed hover:cursor-pointer"
+            className="px-3 py-1.5 bg-gray-100 disabled:bg-gray-300 disabled:cursor-not-allowed hover:cursor-pointer"
             onClick={prevPage}
             disabled={currentPage === 1}
           >
@@ -82,7 +80,7 @@ function Table({ columns, data, text, onClick = () => {} }) {
             </button>
           ))}
           <button
-            className="px-3 py-1 bg-gray-300 disabled:bg-gray-500 disabled:cursor-not-allowed hover:cursor-pointer"
+            className="px-3 py-1.5 bg-gray-100 disabled:bg-gray-300 disabled:cursor-not-allowed hover:cursor-pointer"
             onClick={nextPage}
             disabled={currentPage === totalPages}
           >
@@ -90,7 +88,7 @@ function Table({ columns, data, text, onClick = () => {} }) {
           </button>
         </>
       )}
-    </>
+    </div>
   );
 }
 

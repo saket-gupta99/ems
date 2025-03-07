@@ -8,10 +8,10 @@ function Header({ isSidebarOpen, openSidebar, closeSidebar }) {
     <div className="flex justify-between items-center col-span-2 bg-black text-white p-1">
       <div className="flex justify-center items-center">
         {isSidebarOpen ? (
-          <RxCross1 className="h-9 w-9 cursor-pointer" onClick={closeSidebar} />
+          <RxCross1 className="h-9 w-9 sm:h-7 sm:w-7 cursor-pointer" onClick={closeSidebar} />
         ) : (
           <GiHamburgerMenu
-            className="h-9 w-9 cursor-pointer"
+            className="h-9 w-9 sm:h-7 sm:w-7 cursor-pointer"
             onClick={openSidebar}
           />
         )}
