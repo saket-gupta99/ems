@@ -5,7 +5,7 @@ import SingleNav from "./SingleNav";
 import { useUser } from "../features/authentication/useUser";
 import FullScreenSpinner from "./FullScreenSpinner";
 
-function LeaveSubmenu() {
+function LeaveSubmenu({setSidebarOpen}) {
   const { user, isLoading } = useUser();
 
   if (isLoading || !user?.data?.general) {
@@ -20,12 +20,14 @@ function LeaveSubmenu() {
         text="Apply Leave"
         icon={<FaCalendarPlus />}
         path="apply-leave"
+        setSidebarOpen={setSidebarOpen}
       />
       {role === "admin" && (
         <SingleNav
           text="Approve Leaves"
           icon={<FaRegCalendarCheck />}
           path="approve-leaves"
+          setSidebarOpen={setSidebarOpen}
         />
       )}
       {role === "admin" && (
@@ -33,12 +35,14 @@ function LeaveSubmenu() {
           text="Employee Leaves"
           icon={<FaRegCalendarXmark />}
           path="employees-leaves"
+          setSidebarOpen={setSidebarOpen}
         />
       )}
       <SingleNav
         text="View Leave"
         icon={<MdOutlinePreview />}
         path="view-leave"
+        setSidebarOpen={setSidebarOpen}
       />
     </div>
   );

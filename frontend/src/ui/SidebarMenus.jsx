@@ -9,7 +9,7 @@ import FullScreenSpinner from "./FullScreenSpinner";
 import EmployeeSubmenu from "./EmployeeSubmenu";
 import SalarySubmenu from "./SalarySubmenu";
 
-function SidebarMenus({ isDropdownClicked, handleDropdown }) {
+function SidebarMenus({ isDropdownClicked, handleDropdown, setSidebarOpen }) {
   const { user, isLoading } = useUser();
 
   if (isLoading || !user?.data?.general) {
@@ -20,28 +20,39 @@ function SidebarMenus({ isDropdownClicked, handleDropdown }) {
 
   return (
     <ul className="flex flex-col justify-center gap-3 w-full">
-      <SingleNav text="Profile" icon={<FaUserAlt />} path="profile" />
+      <SingleNav
+        text="Profile"
+        icon={<FaUserAlt />}
+        path="profile"
+        setSidebarOpen={setSidebarOpen}
+      />
       <SingleNav
         text="Attendance"
         icon={<FaCalendar />}
         onClick={() => handleDropdown(1)}
         dropdown={true}
       />
-      {isDropdownClicked === 1 && <AttendanceSubmenus />}
+      {isDropdownClicked === 1 && (
+        <AttendanceSubmenus setSidebarOpen={setSidebarOpen} />
+      )}
       <SingleNav
         text="Leaves"
         icon={<MdOutlineAccessTimeFilled />}
         dropdown={true}
         onClick={() => handleDropdown(2)}
       />
-      {isDropdownClicked === 2 && <LeaveSubmenu />}
+      {isDropdownClicked === 2 && (
+        <LeaveSubmenu setSidebarOpen={setSidebarOpen} />
+      )}
       <SingleNav
         text="Salary"
         icon={<FaMoneyCheckAlt />}
         dropdown={true}
         onClick={() => handleDropdown(4)}
       />
-      {isDropdownClicked === 4 && <SalarySubmenu />}
+      {isDropdownClicked === 4 && (
+        <SalarySubmenu setSidebarOpen={setSidebarOpen} />
+      )}
       {role === "admin" && (
         <SingleNav
           text="Employees"
@@ -50,7 +61,9 @@ function SidebarMenus({ isDropdownClicked, handleDropdown }) {
           onClick={() => handleDropdown(3)}
         />
       )}
-      {isDropdownClicked === 3 && <EmployeeSubmenu />}
+      {isDropdownClicked === 3 && (
+        <EmployeeSubmenu setSidebarOpen={setSidebarOpen} />
+      )}
     </ul>
   );
 }

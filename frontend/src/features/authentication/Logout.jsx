@@ -14,7 +14,7 @@ function Logout() {
   
   return (
     <IoMdLogOut
-      className="h-7 w-7 text-red-700 cursor-pointer"
+      className="h-9 w-9 text-red-700 cursor-pointer"
       onClick={logout}
     />
   );

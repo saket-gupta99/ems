@@ -42,7 +42,7 @@ function UpdatePhoto({ setPhotoClicked }) {
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-[1000] p-2">
       <div className="bg-white shadow-xl rounded-md w-full max-w-md">
         <div className="relative">
-          <h2 className="bg-black text-white p-2 sm:text-center text-left sm:text-2xl font-bold">
+          <h2 className="bg-black text-white p-2 sm:text-center text-left text-xl sm:text-2xl font-bold">
             Update Your Profile Picture
           </h2>
           <RxCross1
@@ -54,18 +54,18 @@ function UpdatePhoto({ setPhotoClicked }) {
           <img
             src={user?.data.general.photoUrl}
             alt="profile-photo"
-            className="sm:w-40 sm:h-40 h-32 w-32 rounded-full mx-auto border"
+            className="sm:w-40 sm:h-40 h-36 w-36 rounded-full mx-auto border"
           />
-          <h2 className="mt-2 font-medium sm:text-xl">Upload Picture</h2>
+          <h2 className="mt-2 font-medium text-lg sm:text-xl">Upload Picture</h2>
         </div>
         <div className="flex flex-col sm:flex-row gap-1 w-full justify-between border border-t-2 pt-2">
           <input
             type="file"
-            className="border sm:py-2 sm:px-6 cursor-pointer"
+            className="border sm:py-5 sm:px-6 text-lg cursor-pointer"
             onChange={handleFileChange}
           />
           <button
-            className="bg-blue-500 text-white sm:py-3 sm:px-6 cursor-pointer"
+            className="bg-blue-500 text-white sm:py-5 text-lg cursor-pointer"
             onClick={handleUpdate}
           >
             Update

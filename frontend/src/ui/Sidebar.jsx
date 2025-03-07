@@ -25,7 +25,7 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }) {
       <div
         className={`${
           !isSidebarOpen ? "-translate-x-full" : "translate-x-0"
-        } col-start-1 col-end-3 sm:col-end-2 row-start-2 row-end-3 z-10 flex flex-col items-center py-2  bg-gray-900 text-white w-full transition-all ease-in-out duration-300 min-h-screen sm:overflow-y-auto px-6 sm:px-8`}
+        } col-start-1 col-end-3 sm:col-end-2 row-start-2 row-end-3 z-1000 flex flex-col items-center py-2  bg-gray-900 text-white w-full transition-all ease-in-out duration-300 min-h-screen sm:overflow-y-auto px-6 sm:px-8`}
       >
         <ProfilePhoto
           img={photoUrl}

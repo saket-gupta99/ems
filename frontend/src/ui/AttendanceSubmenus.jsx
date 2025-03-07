@@ -4,7 +4,7 @@ import SingleNav from "./SingleNav";
 import { useUser } from "../features/authentication/useUser";
 import FullScreenSpinner from "./FullScreenSpinner";
 
-function AttendanceSubmenus() {
+function AttendanceSubmenus({setSidebarOpen}) {
   const { user, isLoading } = useUser();
 
   if (isLoading || !user?.data?.general) {
@@ -19,17 +19,20 @@ function AttendanceSubmenus() {
         text="View Attendance"
         icon={<MdGridView />}
         path="view-attendance"
+        setSidebarOpen={setSidebarOpen}
       />
       <SingleNav
         text="Manage Attendance"
         icon={<FaRegPenToSquare />}
         path="manage-attendance"
+        setSidebarOpen={setSidebarOpen}
       />
       {role === "admin" && (
         <SingleNav
           text="Employee Attendance"
           icon={<MdCoPresent />}
           path="employees-attendance"
+          setSidebarOpen={setSidebarOpen}
         />
       )}
       {role === "admin" && (
@@ -37,6 +40,7 @@ function AttendanceSubmenus() {
           text="Add Location"
           icon={<MdAddLocationAlt />}
           path="add-location"
+          setSidebarOpen={setSidebarOpen}
         />
       )}
     </div>

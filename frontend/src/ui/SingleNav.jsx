@@ -1,7 +1,7 @@
 import { FaSortDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function SingleNav({ icon, text, dropdown, path, onClick }) {
+function SingleNav({ icon, text, dropdown, path, onClick, setSidebarOpen }) {
   const navigate = useNavigate();
 
   return (
@@ -11,7 +11,13 @@ function SingleNav({ icon, text, dropdown, path, onClick }) {
     >
       <div className="flex items-center">
         {icon}
-        <span className="pl-2" onClick={() => navigate(path)}>
+        <span
+          className="pl-2"
+          onClick={() => {
+            navigate(path);
+            setSidebarOpen(false);
+          }}
+        >
           {text}
         </span>
       </div>

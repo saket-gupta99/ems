@@ -148,7 +148,7 @@ function AddLocation() {
         <MdAddLocationAlt className="h-10 w-10 sm:h-8 sm:w-8" />
         Add Location
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 shadow-2xl p-5 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 shadow-2xl p-5 gap-2">
         {allLocations.length > 0 && !open ? (
           <>
             <div>
