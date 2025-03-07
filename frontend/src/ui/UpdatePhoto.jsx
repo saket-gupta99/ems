@@ -39,7 +39,7 @@ function UpdatePhoto({ setPhotoClicked }) {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-[1000] p-2">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900/80 z-1000000 p-2">
       <div className="bg-white shadow-xl rounded-md w-full max-w-md">
         <div className="relative">
           <h2 className="bg-black text-white p-2 sm:text-center text-left text-xl sm:text-2xl font-bold">

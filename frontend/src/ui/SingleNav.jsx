@@ -15,7 +15,7 @@ function SingleNav({ icon, text, dropdown, path, onClick, setSidebarOpen }) {
           className="pl-2"
           onClick={() => {
             navigate(path);
-            if (window.innerWidth > 450) {
+            if (window.innerWidth < 450) {
               setSidebarOpen(false);
             }
           }}
