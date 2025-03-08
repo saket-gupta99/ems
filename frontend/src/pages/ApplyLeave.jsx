@@ -62,7 +62,7 @@ function ApplyLeaves() {
         className="sm:w-[50%] w-full m-auto p-4 rounded shadow-2xl transition-transform duration-500"
         onSubmit={handleSubmit}
       >
-        <div className="grid grid-cols-1 gap-5 p-3 sm:p-7 w-full m-auto min-h-screen sm:min-h-fit">
+        <div className="grid grid-cols-1 gap-5 p-3 sm:p-7 w-full m-auto ">
           <label>
             Leave Type*:
             <select

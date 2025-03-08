@@ -4,8 +4,8 @@ import FullScreenSpinner from "../ui/FullScreenSpinner";
 import Table from "../ui/Table";
 
 const tableColumns = [
-  { key: "employeeId", label: "Payroll Month" },
-  { key: "payrollMonth", label: "Employee ID" },
+  { key: "employeeId", label: "Employee ID" },
+  { key: "payrollMonth", label: "Payroll Month" },
   { key: "basicSalary", label: "Basic Salary" },
   { key: "allowances", label: "Allowances" },
   { key: "bonus", label: "Bonus" },

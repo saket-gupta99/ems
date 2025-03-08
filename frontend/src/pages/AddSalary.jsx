@@ -33,7 +33,7 @@ function AddSalary() {
       </h1>
       <div className="w-full p-5 shadow-2xl">
         <form
-          className="grid grid-cols-1 sm:grid-cols-2 sm:gap-10 sm:space-y-20 space-y-10 min-h-screen sm:min-h-fit"
+          className="grid grid-cols-1 sm:grid-cols-2 sm:gap-10 sm:space-y-20 space-y-10"
           onSubmit={handleSubmit}
         >
           <div>

@@ -274,8 +274,9 @@ authRouter.patch(
 
       employee.general.isVerified = false;
       employee.general.employeeId = "DEL-" + employee.general.employeeId;
+      employee.general.password = "DEL-" + employee.general.password;
       await employee.save({ validateModifiedOnly: true });
-      res.status(200).json({ message: "User inactivated" });
+      res.status(200).json({ message: "Employee deactivated" });
     } catch (err) {
       handleErrors(err, res);
     }
