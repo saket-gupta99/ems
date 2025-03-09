@@ -11,6 +11,19 @@ import { useAddLocation } from "../features/attendance/useAddLocation";
 import { useGetLocation } from "../features/attendance/useGetLocation";
 import { useEditEmployeeLocation } from "../features/attendance/useEditEmployeeLocation";
 import { useRemoveLocation } from "../features/attendance/useRemoveLocation";
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+const customIcon = new L.Icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 
 function AddLocation() {
   const { allEmployees, isLoading } = useGetAllEmployees();
@@ -102,6 +115,7 @@ function AddLocation() {
       (selectedLocation.latitude && selectedLocation.longitude) ? (
       <Marker
         key={`${location.latitude}-${location.longitude}`}
+        icon={customIcon}
         position={
           location.latitude && location.longitude
             ? [location.latitude, location.longitude]
