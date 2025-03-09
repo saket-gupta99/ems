@@ -59,12 +59,16 @@ uploadRouter.post(
         );
       } catch (err) {
         console.error("Cloudinary Error:", err);
-        fs.unlinkSync(req.file.path);
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path);  // Delete file only if it exists
+        }
         return res.status(500).json({ message: "Cloudinary service error!" });
       }
 
       if (!cloudinaryResponse || !cloudinaryResponse.secure_url) {
-        fs.unlinkSync(req.file.path);
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path);  // Delete file only if it exists
+        }
         return res
           .status(500)
           .json({ message: "Failed to upload file on Cloudinary!" });
@@ -95,7 +99,9 @@ uploadRouter.post(
       await req.user.save();
 
       // Cleanup: Delete the local file after successful upload
-      fs.unlinkSync(req.file.path);
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
 
       // Send success response
       res.status(200).json({
