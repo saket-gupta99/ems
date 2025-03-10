@@ -12,12 +12,19 @@ const columns = [
   { key: "designation", label: "Designation" },
   { key: "email", label: "Email" },
   { key: "phone", label: "Phone No." },
-  {key: "isVerified", label: "Is Verified"}
+  { key: "isVerified", label: "Is Verified" },
 ];
 
 const formdatData = (el) => {
-  const { firstName, lastName, employeeId, email, phone, designation, isVerified } =
-    el.general;
+  const {
+    firstName,
+    lastName,
+    employeeId,
+    email,
+    phone,
+    designation,
+    isVerified,
+  } = el.general;
 
   return {
     employeeId,
@@ -25,7 +32,7 @@ const formdatData = (el) => {
     designation,
     email,
     phone,
-    isVerified: isVerified ? "Yes" : "No"
+    isVerified: isVerified ? "Yes" : "No",
   };
 };
 
@@ -50,7 +57,9 @@ function EmployeeList() {
     (el) => el.general.employeeId === empId
   )[0];
 
-  const data = allEmployees.data.map((el) => formdatData(el)).sort((a,b) => a.employeeId.localeCompare(b.employeeId));
+  const data = allEmployees.data
+    .map((el) => formdatData(el))
+    .sort((a, b) => b.isVerified.localeCompare(a.isVerified));
 
   return (
     <>

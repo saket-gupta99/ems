@@ -101,6 +101,12 @@ authRouter.post("/register", async (req, res) => {
       return res.status(400).json({ message: "Invalid employee id or email" });
     }
 
+    if (employee.general.employeeId.startsWith("DEL")) {
+      return res
+        .status(403)
+        .json({ message: "Removed employee can't register again" });
+    }
+
     const otp = generateOtp();
     await Otp.create({
       email,
@@ -233,8 +239,8 @@ authRouter.post("/login", async (req, res) => {
       maxAge: 86400000,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      // sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-      sameSite: "None",
+      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "lax",
+      // sameSite: "None",
       path: "/",
     });
 
@@ -249,8 +255,9 @@ authRouter.post("/logout", userAuth, async (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // false in dev, true in production
-      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // lax in dev
+      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "lax", // lax in dev
       // sameSite: "None",
+      path: "/",
     });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {

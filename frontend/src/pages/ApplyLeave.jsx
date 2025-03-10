@@ -59,10 +59,10 @@ function ApplyLeaves() {
         <FaCalendarPlus className="h-10 w-10 sm:h-8 sm:w-8" /> Apply Leave
       </h1>
       <form
-        className="sm:w-[50%] w-full m-auto p-4 rounded shadow-2xl transition-transform duration-500"
+        className="sm:w-[50%] w-full mx-auto p-4 rounded shadow-2xl transition-transform duration-500 min-h-screen"
         onSubmit={handleSubmit}
       >
-        <div className="grid grid-cols-1 gap-5 p-3 sm:p-7 w-full m-auto min-h-screen">
+        <div className="grid grid-cols-1 gap-5 p-3 sm:p-7 w-full mx-auto">
           <label>
             Leave Type*:
             <select

@@ -12,6 +12,7 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.removeQueries();
       navigate("/home", { replace: true });
+      queryClient.invalidateQueries(["user"]);
     },
     onError: (err) => {
       toast.error(err.message || "Error logging out!");
