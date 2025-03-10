@@ -64,7 +64,7 @@ function Profile() {
       </div>
 
       {tabsConfig[currentTab].name === "Attachments" && (
-        <div className="w-full p-4 rounded shadow-xl transition-transform duration-500">
+        <div className="w-full p-4 rounded shadow-xl transition-transform duration-500 min-h-[50vh]">
           <ShowDocuments />
         </div>
       )}

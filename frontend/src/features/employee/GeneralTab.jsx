@@ -44,7 +44,7 @@ function GeneralTab() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData)
+    console.log(formData);
 
     if (Object.keys(errors).length > 0) return;
 
@@ -81,7 +81,7 @@ function GeneralTab() {
 
   return (
     <form
-      className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5"
+      className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 min-h-screen"
       onSubmit={handleSubmit}
     >
       <div>
@@ -192,8 +192,10 @@ function GeneralTab() {
             onChange={handleChange}
           />{" "}
         </label>
+        <div className="sm:mt-16">
+          {formData.role === "admin" && <SaveButton />}
+        </div>
       </div>
-      {formData.role === "admin" && <SaveButton />}
     </form>
   );
 }

@@ -197,7 +197,7 @@ function AddLocation() {
         ) : (
           <>
             {" "}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="min-h-screen">
               <label>
                 Location*:
                 <input

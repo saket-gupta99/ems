@@ -49,7 +49,7 @@ function AttachmentTab() {
 
   return (
     <form
-      className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+      className="grid grid-cols-1 sm:grid-cols-2 gap-5 min-h-[50vh]"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-1">

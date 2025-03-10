@@ -58,7 +58,7 @@ function EmployeesLeaves() {
         <FaRegCalendarXmark className="h-10 w-10 sm:h-8 sm:w-8" /> Employee
         Leaves
       </h1>
-      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5 ">
+      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5 min-h-screen">
         <SearchBar search={currEmp} setSearch={setCurrEmp} />
         {!currEmp && <Table columns={columns} data={data} text="All Leaves" />}
         {currEmp && searchData.length > 0 && (

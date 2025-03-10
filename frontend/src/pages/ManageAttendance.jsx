@@ -78,7 +78,7 @@ function ManageAttendance() {
         <FaRegPenToSquare className="h-10 w-10 sm:h-8 sm:w-8" /> Manage Attendance
       </h1>
 
-      <div className="shadow-2xl flex flex-col justify-center p-10">
+      <div className="shadow-2xl flex flex-col p-10  min-h-screen">
         <div className="text-center space-y-3">
           <p className="font-semibold sm:text-lg">
             Make sure to click on the "Get My Location" button before check-in

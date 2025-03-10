@@ -35,7 +35,7 @@ function GeneratedSlips() {
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
         <FaMoneyBills className="h-10 w-10 sm:h-8 sm:w-8" /> Generated Slips
       </h1>
-      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5 min-h-screen sm:min-h-fit">
+      <div className="grid grid-cols-3 grid-rows-[auto_1fr] w-full shadow-2xl p-5 min-h-screen">
         {data.length > 0 && (
           <Table columns={tableColumns} data={data} text="All Slips" />
         )}

@@ -4,7 +4,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -14,23 +13,22 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import AppLayout from "./ui/AppLayout";
 import Home from "./pages/Home";
-import FullScreenSpinner from "./ui/FullScreenSpinner";
 
-const Profile = lazy(() => import("./pages/Profile"));
-const AddSalary = lazy(() => import("./pages/AddSalary"));
-const AddEmployee = lazy(() => import("./pages/AddEmployee"));
-const ViewAttendance = lazy(() => import("./pages/ViewAttendance"));
-const ManageAttendance = lazy(() => import("./pages/ManageAttendance"));
-const EmployeesAttendance = lazy(() => import("./pages/EmployeesAttendance"));
-const ApplyLeaves = lazy(() => import("./pages/ApplyLeave"));
-const EmployeesLeaves = lazy(() => import("./pages/EmployeesLeaves"));
-const ApproveLeaves = lazy(() => import("./pages/ApproveLeaves"));
-const SetPassword = lazy(() => import("./features/authentication/SetPassword"));
-const SalarySlip = lazy(() => import("./pages/SalarySlip"));
-const GeneratedSlips = lazy(() => import("./pages/GeneratedSlips"));
-const ViewLeave = lazy(() => import("./pages/ViewLeave"));
-const AddLocation = lazy(() => import("./pages/AddLocation"));
-const EmployeeList = lazy(() => import("./pages/EmployeeList"));
+import Profile from "./pages/Profile";
+import AddSalary from "./pages/AddSalary";
+import AddEmployee from "./pages/AddEmployee";
+import ViewAttendance from "./pages/ViewAttendance";
+import ManageAttendance from "./pages/ManageAttendance";
+import EmployeesAttendance from "./pages/EmployeesAttendance";
+import ApplyLeaves from "./pages/ApplyLeave";
+import EmployeesLeaves from "./pages/EmployeesLeaves";
+import ApproveLeaves from "./pages/ApproveLeaves";
+import SetPassword from "./features/authentication/SetPassword";
+import SalarySlip from "./pages/SalarySlip";
+import GeneratedSlips from "./pages/GeneratedSlips";
+import ViewLeave from "./pages/ViewLeave";
+import AddLocation from "./pages/AddLocation";
+import EmployeeList from "./pages/EmployeeList";
 
 const queryClient = new QueryClient();
 
@@ -42,41 +40,39 @@ export default function App() {
       )}
       
       <Router>
-        <Suspense fallback={<FullScreenSpinner />}>
-          <Routes>
+        <Routes>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate replace to="profile" />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="add-location" element={<AddLocation />} />
+            <Route path="manage-attendance" element={<ManageAttendance />} />
+            <Route path="view-attendance" element={<ViewAttendance />} />
             <Route
-              element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Navigate replace to="profile" />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="add-location" element={<AddLocation />} />
-              <Route path="manage-attendance" element={<ManageAttendance />} />
-              <Route path="view-attendance" element={<ViewAttendance />} />
-              <Route
-                path="employees-attendance"
-                element={<EmployeesAttendance />}
-              />
-              <Route path="apply-leave" element={<ApplyLeaves />} />
-              <Route path="view-leave" element={<ViewLeave />} />
-              <Route path="approve-leaves" element={<ApproveLeaves />} />
-              <Route path="employees-leaves" element={<EmployeesLeaves />} />
-              <Route path="add-salary" element={<AddSalary />} />
-              <Route path="salary-slip" element={<SalarySlip />} />
-              <Route path="generated-slips" element={<GeneratedSlips />} />
-              <Route path="add-employee" element={<AddEmployee />} />
-              <Route path="employee-list" element={<EmployeeList />} />
-            </Route>
+              path="employees-attendance"
+              element={<EmployeesAttendance />}
+            />
+            <Route path="apply-leave" element={<ApplyLeaves />} />
+            <Route path="view-leave" element={<ViewLeave />} />
+            <Route path="approve-leaves" element={<ApproveLeaves />} />
+            <Route path="employees-leaves" element={<EmployeesLeaves />} />
+            <Route path="add-salary" element={<AddSalary />} />
+            <Route path="salary-slip" element={<SalarySlip />} />
+            <Route path="generated-slips" element={<GeneratedSlips />} />
+            <Route path="add-employee" element={<AddEmployee />} />
+            <Route path="employee-list" element={<EmployeeList />} />
+          </Route>
 
-            <Route path="home" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="set-password" element={<SetPassword />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </Suspense>
+          <Route path="home" element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="set-password" element={<SetPassword />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
       </Router>
 
       <Toaster

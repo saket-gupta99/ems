@@ -85,7 +85,7 @@ function AddEmployee() {
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
         <IoIosAddCircle className="h-10 w-10 sm:h-8 sm:w-8" /> Add an Employee
       </h1>
-      <div className="w-full flex flex-col items-center p-5 shadow-2xl min-h-screen">
+      <div className="w-full flex flex-col items-center p-5 shadow-2xl min-h-dvh">
         <form
           className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 pt-5"
           onSubmit={handleSubmit}

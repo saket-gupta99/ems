@@ -68,7 +68,7 @@ function PersonalTab() {
 
   return (
     <form
-      className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5"
+      className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 min-h-screen"
       onSubmit={handleSubmit}
     >
       <div>
@@ -172,8 +172,10 @@ function PersonalTab() {
         {errors.maritalStatus && (
           <p className="block text-red-500">{errors.maritalStatus}</p>
         )}
+        <div className="sm:mt-16">
+          <SaveButton />
+        </div>
       </div>
-      <SaveButton />
     </form>
   );
 }

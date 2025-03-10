@@ -7,7 +7,7 @@ function Map({ children, lat, lng }) {
     <MapContainer
       center={!lat && !lng ? [19.054999, 72.8692035] : [lat, lng]}
       zoom={13}
-      style={{ height: "500px", width: "100%" }}
+      style={{ height: "100dvh", width: "100%" }}
     >
       <TileLayer
         url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"

@@ -24,9 +24,9 @@ function SalarySlip() {
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
         <MdRequestPage className="h-10 w-10 sm:h-8 sm:w-8" /> Salary Slip
       </h1>
-      <div className="w-full p-5 shadow-2xl flex items-center justify-center">
+      <div className="w-full p-5 shadow-2xl flex justify-center min-h-dvh">
         <form
-          className="flex flex-col justify-center space-y-1.5"
+          className="flex flex-col space-y-1.5"
           onSubmit={handleSubmit}
         >
           <h1 className="text-xl font-semibold text-center my-5">

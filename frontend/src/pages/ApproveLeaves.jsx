@@ -58,7 +58,8 @@ function ApproveLeaves() {
         <FaRegCalendarCheck className="h-10 w-10 sm:h-8 sm:w-8" /> Approve
         Leaves
       </h1>
-      <div className="grid grid-cols-1 w-full shadow-2xl p-5 justify-items-center">
+      <div className="min-h-screen shadow-2xl">
+      <div className="grid grid-cols-1 w-full p-5 justify-items-center">
         {data?.map((el) => (
           <Card key={el.employeeId} data={el} handleClick={handleClick} />
         ))}
@@ -68,6 +69,7 @@ function ApproveLeaves() {
           No Leaves to review
         </div>
       )}
+      </div>
     </>
   );
 }

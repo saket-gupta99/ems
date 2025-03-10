@@ -12,7 +12,7 @@ function Card({ data, handleClick }) {
   )[0].general.totalLeavesAllowed;
 
   return (
-    <div className="w-full max-w-lg mx-auto rounded shadow-xl md:grid grid-cols-2 gap-4 p-4">
+    <div className="w-full max-w-lg mx-auto rounded shadow-sm md:grid grid-cols-2 gap-4 p-4">
       <div className="flex items-center gap-2">
         <img
           src={data?.photoUrl}

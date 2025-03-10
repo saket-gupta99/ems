@@ -312,9 +312,11 @@ function ContactTab() {
             <option value="Puducherry">Puducherry</option>
           </select>
         </label>
+        <div className="sm:mt-16">
+          <SaveButton />
+        </div>
       </div>
-
-      <SaveButton />
+  
     </form>
   );
 }

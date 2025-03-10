@@ -31,7 +31,7 @@ function AddSalary() {
       <h1 className="flex font-semibold gap-3 text-lg sm:text-xl sm:p-3 p-2 w-full shadow-xl items-center">
         <IoMdAdd className="h-10 w-10 sm:h-8 sm:w-8" /> Add Salary
       </h1>
-      <div className="w-full p-5 shadow-2xl">
+      <div className="w-full p-5 shadow-2xl min-h-screen">
         <form
           className="grid grid-cols-1 sm:grid-cols-2 sm:gap-10 sm:space-y-20 space-y-10"
           onSubmit={handleSubmit}
