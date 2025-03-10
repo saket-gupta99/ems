@@ -239,8 +239,8 @@ authRouter.post("/login", async (req, res) => {
       maxAge: 86400000,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "lax",
-      // sameSite: "None",
+      // sameSite: process.env.NODE_ENV === "production" ? "Strict" : "lax",
+      sameSite: "None",
       path: "/",
     });
 
@@ -255,8 +255,8 @@ authRouter.post("/logout", userAuth, async (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // false in dev, true in production
-      sameSite: process.env.NODE_ENV === "production" ? "Strict" : "lax", // lax in dev
-      // sameSite: "None",
+      // sameSite: process.env.NODE_ENV === "production" ? "Strict" : "lax", // lax in dev
+      sameSite: "None",
       path: "/",
     });
     res.status(200).json({ message: "Logged out successfully" });
