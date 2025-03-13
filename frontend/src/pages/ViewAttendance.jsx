@@ -5,7 +5,7 @@ import FullScreenSpinner from "../ui/FullScreenSpinner";
 import Table from "../ui/Table";
 import SortButtons from "../ui/SortButtons";
 import { MdGridView } from "react-icons/md";
-import { extractDate, extractTime } from "../utils/helper";
+import { convertToIst, extractDate, extractTime } from "../utils/helper";
 
 const tableColumns = [
   { key: "date", label: "Date" },
@@ -35,7 +35,7 @@ function ViewAttendance() {
   }
 
   function getAttendanceForDate(selectedDays) {
-    const today = new Date();
+    const today = convertToIst(new Date());
     today.setUTCHours(0, 0, 0, 0);
 
     const startDate = new Date();

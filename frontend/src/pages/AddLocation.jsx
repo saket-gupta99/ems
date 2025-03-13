@@ -44,7 +44,7 @@ function AddLocation() {
 
   useEffect(() => {
     if (allEmployees?.data) {
-      setEmployees(allEmployees.data);
+      setEmployees(allEmployees.data.filter(el => el.general.isVerified));
     }
     if (selectedLocation?.employees) {
       setAddedEmployees(

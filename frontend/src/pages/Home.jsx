@@ -87,17 +87,14 @@ function Home() {
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button className="bg-yellow-400 px-6 py-3 text-gray-900 font-bold w-full sm:w-auto text-center">
-                <a
-                  href="https://www.indiamart.com/siinfratech/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  KNOW MORE
-                </a>
+                <a href="#services">OUR SERVICES</a>
               </button>
-              <button className="bg-yellow-400 px-6 py-3 text-gray-900 font-bold w-full sm:w-auto text-center">
-                <Link to="/login">LOGIN</Link>
-              </button>
+              <Link
+                className="bg-yellow-400 px-6 py-3 text-gray-900 font-bold w-full sm:w-auto text-center"
+                to="/login"
+              >
+                LOGIN
+              </Link>
             </div>
           </div>
         </div>
@@ -138,7 +135,7 @@ function Home() {
         </div>
 
         {/* Services Grid */}
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 py-16" id="services">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <div
@@ -201,7 +198,7 @@ function Home() {
               placeholder="Enter your email"
               className="px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 bg-white"
             />
-            <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300">
+            <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 cursor-pointer">
               Contact Us Now
             </button>
           </div>

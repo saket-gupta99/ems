@@ -49,6 +49,27 @@ salaryRouter.post(
 
       const [month, year] = payrollMonth.split("-").map(Number);
 
+      if (
+        ![
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+          "10",
+          "11",
+          "12",
+        ].includes(payrollMonth.split("-")[0])
+      )
+        return res.status(400).json({ message: "Enter a valid month" });
+        
+      if (year < new Date().getFullYear())
+        return res.status(400).json({ message: "Year can't be in past" });
+
       const startDate = new Date(year, month - 1, 1);
       const endDate = new Date(year, month, 0); //0 refers to the last day of the previous month.
       endDate.setHours(0, 0, 0, 0);
@@ -59,6 +80,11 @@ salaryRouter.post(
           $lte: endDate,
         },
       });
+
+      if (employeeAttendance.length === 0)
+        return res.status(403).json({
+          message: `This employee has 0 attendance for the month of ${month}. Can't add a pay slip`,
+        });
 
       //test this later
       const extraLeavesTakenFromEarnedLeave =

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-const TABLE_ROWS = 7;
+const TABLE_ROWS = 10;
 
 function Table({ columns, data, text, onClick = () => {} }) {
   const [currentPage, setcurrentPage] = useState(1);

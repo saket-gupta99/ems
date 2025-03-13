@@ -73,13 +73,6 @@ function EmployeeDetails({ employee }) {
 
   return (
     <div className="overflow-auto p-2 flex-grow max-h-[95vh]">
-      {employee.general.isVerified && <button
-        type="button"
-        className="sm:col-start-2 text-center mx-auto w-full mb-5 gap-2 bg-red-500 text-white p-2 rounded mt-5 sm:mt-2 cursor-pointer text-xl"
-        onClick={() => handleDeactivateEmployee(employee.general.employeeId)}
-      >
-        Remove {employee.general.firstName + " " + employee.general.lastName}
-      </button>}
       <div className="mb-5">
         <h2 className="text-xl font-semibold text-center">General Section</h2>
         <form
@@ -193,7 +186,7 @@ function EmployeeDetails({ employee }) {
                 name="dateOfLeaving"
                 className="w-full border border-gray-400 p-1 mb-2"
                 defaultValue={
-                  employee.general.dateOfLeaving ||
+                  formatDateToISO(employee.general.dateOfLeaving) ||
                   generalFormData.dateOfLeaving ||
                   ""
                 }
@@ -513,6 +506,15 @@ function EmployeeDetails({ employee }) {
           <SaveButton />
         </form>
       </div>
+      {employee.general.isVerified && (
+        <button
+          type="button"
+          className="sm:col-start-2 text-center mx-auto w-full mb-5 gap-2 bg-red-500 text-white p-2 rounded  cursor-pointer text-xl capitalize font-bold"
+          onClick={() => handleDeactivateEmployee(employee.general.employeeId)}
+        >
+          Remove {employee.general.firstName + " " + employee.general.lastName}
+        </button>
+      )}
     </div>
   );
 }
