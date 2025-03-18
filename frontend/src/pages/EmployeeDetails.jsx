@@ -510,7 +510,13 @@ function EmployeeDetails({ employee }) {
         <button
           type="button"
           className="sm:col-start-2 text-center mx-auto w-full mb-5 gap-2 bg-red-500 text-white p-2 rounded  cursor-pointer text-xl capitalize font-bold"
-          onClick={() => handleDeactivateEmployee(employee.general.employeeId)}
+          onClick={() =>
+            window.confirm(
+              `Do you really want to deactivate the employee: ${
+                employee.general.firstName + " " + employee.general.lastName
+              }?`
+            ) ? handleDeactivateEmployee(employee.general.employeeId) : ""
+          }
         >
           Remove {employee.general.firstName + " " + employee.general.lastName}
         </button>

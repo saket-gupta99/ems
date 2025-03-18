@@ -29,7 +29,7 @@ function AttendanceSubmenus({setSidebarOpen}) {
       />
       {role === "admin" && (
         <SingleNav
-          text="Employees Attendance"
+          text="Employee Attendance"
           icon={<MdCoPresent />}
           path="employees-attendance"
           setSidebarOpen={setSidebarOpen}

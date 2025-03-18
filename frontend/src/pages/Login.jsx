@@ -12,21 +12,21 @@ function Login() {
         <div className="absolute top-0 flex justify-evenly w-full font-bold bg-black text-white divide-x rounded-t-md">
           <button
             onClick={() => setPage("login")}
-            className="text-xl p-1 sm:p-4 cursor-pointer w-full"
+            className="text-xl p-3 sm:p-4 cursor-pointer w-full"
           >
             Login
           </button>
           <button
             onClick={() => setPage("register")}
-            className="text-xl p-1 sm:p-4 cursor-pointer w-full "
+            className="text-xl p-3 sm:p-4 cursor-pointer w-full "
           >
-            Register
+            Verify 
           </button>
         </div>
 
         <FaUserCircle className="h-18 w-18 xs:h-22 xs:w-22 sm:h-26 sm:w-26 md:h-32 md:w-32 lg:h-36 mt-10 lg:w-36" />
-        <h1 className="text-2xl xs:text-3xl md:text-3xl font-semibold text-center">
-          {page === "login" ? "Login to your account" : "Register your account"}
+        <h1 className="text-3xl font-semibold text-center">
+          {page === "login" ? "Login to your account" : "Verify your account"}
         </h1>
         {page === "login" ? <LoginForm /> : <Register />}
       </div>
