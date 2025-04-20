@@ -1,6 +1,33 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSendMsg } from "../features/employee/useSendMsg";
+import FullScreenSpinner from "../ui/FullScreenSpinner";
+import toast from "react-hot-toast";
+import validator from "validator";
 
 function Home() {
+  const [email, setEmail] = useState({ email: "" });
+  const { sendMessage, isLoading } = useSendMsg();
+
+  if (isLoading) return <FullScreenSpinner />;
+
+  function handleSendMsg(email) {
+    if (!email.email) return toast.error("Enter email");
+
+    if (!validator.isEmail(email.email)) return toast.error("Enter valid email");
+
+    sendMessage(
+      { data: email },
+      {
+        onSuccess: () => setEmail(""),
+      }
+    );
+  }
+
+  function handleChange(e) {
+    setEmail({...email, [e.target.name]: e.target.value})
+  }
+
   const services = [
     {
       title: "Prefabricated Structure Fabrication Service",
@@ -197,10 +224,16 @@ function Home() {
           <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
               className="px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 bg-white"
+              value={email.email || ""}
+              onChange={handleChange}
             />
-            <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 cursor-pointer">
+            <button
+              className="bg-gray-900 text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors duration-300 cursor-pointer"
+              onClick={() => handleSendMsg(email)}
+            >
               Contact Us Now
             </button>
           </div>

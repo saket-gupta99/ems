@@ -123,7 +123,7 @@ export async function logout() {
   return data;
 }
 
-export async function resetPassword({data}) {
+export async function resetPassword({ data }) {
   const res = await fetch(`${API_URL}/api/reset-password`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -138,32 +138,47 @@ export async function resetPassword({data}) {
   return result;
 }
 
-export async function forgotPassword({data}) {
+export async function forgotPassword({ data }) {
   const res = await fetch(`${API_URL}/api/forgot-password`, {
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(data),
-    credentials: "include"
+    credentials: "include",
   });
   const result = await res.json();
   if (!res.ok) {
     console.log(result.message || "Error sending OTP!");
     throw new Error(result.message || "Error sending OTP!");
   }
-  return result; 
+  return result;
 }
 
-export async function deacitvateEmployee({data}) {
+export async function deacitvateEmployee({ data }) {
   const res = await fetch(`${API_URL}/api/deactivate-user`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   const result = await res.json();
   if (!res.ok) {
     console.log(result.message || "Error deactivating out!");
     throw new Error(result.message || "Error deactivating out!");
+  }
+  return result;
+}
+
+export async function sendMessage({ data }) {
+  const res = await fetch(`${API_URL}/api/send-email`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const result = await res.json();
+  if (!res.ok) {
+    console.log(result.message || "Error sending msg");
+    throw new Error(result.message || "Error sending msg");
   }
   return result;
 }

@@ -6,7 +6,11 @@ const bcrypt = require("bcrypt");
 const Employee = require("../models/Employee");
 const userAuth = require("../middlewares/auth");
 const Otp = require("../models/Otp");
-const { sendOTP, sendRegistrationMsg } = require("../utils/emailServices");
+const {
+  sendOTP,
+  sendRegistrationMsg,
+  sendEmailToMe,
+} = require("../utils/emailServices");
 const validateSignupInput = require("../utils/validateSignupInput");
 const { handleErrors } = require("../utils/helper");
 const adminMiddleware = require("../middlewares/adminMiddleware");
@@ -369,6 +373,21 @@ authRouter.post("/reset-password", userAuth, async (req, res) => {
 
     await req.user.save();
     res.status(200).json({ message: "Password reset done successfully" });
+  } catch (err) {
+    handleErrors(err, res);
+  }
+});
+
+authRouter.post("/send-email", async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log(email)
+
+    if (!email) return res.status(400).json({ message: "Email is required" });
+
+    await sendEmailToMe(email);
+
+    res.status(200).json({ message: "Email sent" });
   } catch (err) {
     handleErrors(err, res);
   }

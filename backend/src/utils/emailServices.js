@@ -32,6 +32,16 @@ const sendRegistrationMsg = async (email) => {
   });
 };
 
+const sendEmailToMe = async (email) => {
+  await transporter.sendMail({
+    from: process.env.SMTP_USER,         
+    to: process.env.SMTP_USER,           
+    replyTo: email,
+    subject: "Customer contacting",
+    text: `${email} has contacted you.`,
+  });
+};
+
 const sendLeaveMsg = async (email, startDate, endDate, action) => {
   await transporter.sendMail({
     from: process.env.SMTP_USER,
@@ -43,4 +53,4 @@ const sendLeaveMsg = async (email, startDate, endDate, action) => {
   });
 };
 
-module.exports = { sendOTP, sendRegistrationMsg, sendLeaveMsg };
+module.exports = { sendOTP, sendRegistrationMsg, sendLeaveMsg, sendEmailToMe };
