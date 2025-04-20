@@ -82,9 +82,13 @@ function EmployeesAttendance() {
         date: extractDate(new Date(date)),
         checkInTime: "-",
         checkOutTime: "-",
-        locationName: "-"
+        locationName: "-",
       }))
-      .filter((el) => !presentEmployeeIds.has(el.employeeId));
+      .filter(
+        (el) =>
+          !presentEmployeeIds.has(el.employeeId) &&
+          !el.employeeId.startsWith("DEL-")
+      );
 
     return [...presentEmployees, ...absentEmployees];
   }

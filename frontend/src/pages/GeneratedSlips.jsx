@@ -21,13 +21,15 @@ function GeneratedSlips() {
   if (isLoading) return <FullScreenSpinner />;
 
   const data = getSalaryData?.data
-    ? getSalaryData.data.map((el) => ({
-        ...el,
-        deduction: el.deduction ? el.deduction.toFixed(2) : 0,
-        netSalary: el.netSalary ? el.netSalary.toFixed(2) : 0,
-        bonus: el.bonus ? el.bonus.toFixed(2) : 0,
-        allowances: el.allowances ? el.allowances.toFixed(2) : 0,
-      }))
+    ? getSalaryData.data
+        .map((el) => ({
+          ...el,
+          deduction: el.deduction ? el.deduction.toFixed(2) : 0,
+          netSalary: el.netSalary ? el.netSalary.toFixed(2) : 0,
+          bonus: el.bonus ? el.bonus.toFixed(2) : 0,
+          allowances: el.allowances ? el.allowances.toFixed(2) : 0,
+        }))
+        .reverse()
     : [];
 
   return (

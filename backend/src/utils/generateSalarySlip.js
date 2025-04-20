@@ -119,7 +119,9 @@ async function generatePaySlip(employeeId, payrollMonth) {
 async function salarySlipHandler(req, res) {
   try {
     const { employeeId } = req.user.general;
-    const { payrollMonth } = req.body;
+    let { payrollMonth } = req.body;
+    const [year, month] = payrollMonth.split("-")
+    payrollMonth = month + "-" + year;
 
     if (!employeeId) {
       return res.status(400).json({ message: "employee id is required" });

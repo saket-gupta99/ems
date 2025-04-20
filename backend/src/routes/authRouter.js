@@ -122,9 +122,42 @@ authRouter.post("/register", async (req, res) => {
   }
 });
 
+authRouter.post("/forgot-password", async (req, res) => {
+  try {
+    const { email, employeeId } = req.body;
+    if (!email || !employeeId)
+      return res.status(400).json({ message: "Both fields are required" });
+
+    const employee = await Employee.findOne({
+      "general.email": email,
+      "general.employeeId": employeeId,
+      "general.isVerified": true,
+    });
+
+    if (!employee)
+      return res.status(401).json({ message: "No employee record found" });
+
+    const otp = generateOtp();
+    await Otp.create({
+      email,
+      otp,
+      expiresAt: new Date(Date.now() + 3 * 60 * 1000),
+    });
+
+    await sendOTP(email, otp);
+
+    res.status(200).json({ message: "OTP sent to email" });
+  } catch (err) {
+    handleErrors(err, res);
+  }
+});
+
 authRouter.post("/verify-otp", async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    const { email, otp, forgotPassword } = req.body;
+
+    if (!otp || !email)
+      return res.status(400).json({ message: "All fields are required" });
 
     const otpRecord = await Otp.findOne({
       email,
@@ -144,7 +177,10 @@ authRouter.post("/verify-otp", async (req, res) => {
     await Otp.deleteMany({ email });
 
     res.status(200).json({
-      message: "OTP verified. Now you'll be redirected to set your password",
+      message: forgotPassword
+        ? "OTP verified"
+        : "OTP verified. Now you'll be redirected to set your password",
+      isForgotPassword: forgotPassword ? true : false,
     });
   } catch (err) {
     handleErrors(err, res);
@@ -153,26 +189,32 @@ authRouter.post("/verify-otp", async (req, res) => {
 
 authRouter.post("/set-password", async (req, res) => {
   try {
-    const { email, password, confirmPassword } = req.body;
+    const { email, password, confirmPassword, forgotPassword } = req.body;
 
-    const hasAlreadyRegistered = await Employee.findOne({
-      "general.email": email,
-    });
+    if (!email || !password || !confirmPassword)
+      return res.status(400).json({ message: "All fields are required" });
 
-    if (
-      hasAlreadyRegistered &&
-      !Boolean(hasAlreadyRegistered.general.isVerified)
-    ) {
-      return res.status(403).json({
-        message:
-          "You need to first register yourself with us first to set password",
+    if (!forgotPassword) {
+      const hasAlreadyRegistered = await Employee.findOne({
+        "general.email": email,
       });
+
+      if (
+        hasAlreadyRegistered &&
+        !Boolean(hasAlreadyRegistered.general.isVerified)
+      ) {
+        return res.status(403).json({
+          message:
+            "You need to first register yourself with us first to set password",
+        });
+      }
+      if (hasAlreadyRegistered && hasAlreadyRegistered.general.password) {
+        return res
+          .status(403)
+          .json({ message: "You're already registered with us" });
+      }
     }
-    if (hasAlreadyRegistered && hasAlreadyRegistered.general.password) {
-      return res
-        .status(403)
-        .json({ message: "You're already registered with us" });
-    }
+
     if (!validator.isStrongPassword(password)) {
       return res.status(400).json({
         message:
@@ -192,11 +234,12 @@ authRouter.post("/set-password", async (req, res) => {
       { "general.password": hashedPassword }
     );
 
-    await sendRegistrationMsg(email);
+    if (!forgotPassword) await sendRegistrationMsg(email);
 
-    res
-      .status(200)
-      .json({ message: "Password set successfully. You can now log in." });
+    res.status(200).json({
+      message:
+        !forgotPassword && "Password set successfully. You can now log in.",
+    });
   } catch (err) {
     handleErrors(err, res);
   }
@@ -281,7 +324,8 @@ authRouter.patch(
 
       employee.general.isVerified = false;
       employee.general.employeeId = "DEL-" + employee.general.employeeId;
-      employee.general.password = "DEL-" + employee.general.password;
+      if (employee.general.password)
+        employee.general.password = "DEL-" + employee.general.password;
       await employee.save({ validateModifiedOnly: true });
       res.status(200).json({ message: "Employee deactivated" });
     } catch (err) {

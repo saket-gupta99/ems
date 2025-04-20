@@ -86,9 +86,11 @@ function Home() {
               ensuring quality, durability, and timely delivery.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <button className="bg-yellow-400 px-6 py-3 text-gray-900 font-bold w-full sm:w-auto text-center">
-                <a href="#services">OUR SERVICES</a>
-              </button>
+              <a href="#services">
+                <button className="bg-yellow-400 px-6 py-3 cursor-pointer text-gray-900 font-bold w-full sm:w-auto text-center">
+                  OUR SERVICES
+                </button>
+              </a>
               <Link
                 className="bg-yellow-400 px-6 py-3 text-gray-900 font-bold w-full sm:w-auto text-center"
                 to="/login"

@@ -19,7 +19,7 @@ function Card({ data, handleClick }) {
           alt="profile-photo"
           className="h-10 w-10 rounded-full"
         />
-        <span className="text-slate-700 font-semibold text-lg">
+        <span className="text-slate-700 font-semibold capitalize text-lg">
           {data?.firstName + " " + data?.lastName}
         </span>
       </div>

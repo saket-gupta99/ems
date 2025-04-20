@@ -2,8 +2,8 @@ const express = require("express");
 const { upload } = require("../middlewares/multerMiddleware");
 const { uploadOnCloudinary } = require("../utils/cloudinary");
 const fs = require("fs");
+const path = require("path");
 const userAuth = require("../middlewares/auth");
-const { handleErrors } = require("../utils/helper");
 
 const uploadRouter = express.Router();
 
@@ -12,105 +12,139 @@ uploadRouter.post(
   upload.single("file"),
   userAuth,
   async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        error: "No file uploaded",
+      });
+    }
+
+    // ✅ Updated allowedTypes (PDF removed)
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/jpg",
+      "image/webp",
+      "application/msword", // .doc
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+    ];
+
+    const fileType = req.file.mimetype;
+
+    // ✅ Special case: block PDFs with custom message
+    if (fileType === "application/pdf") {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({
+        message: "PDF uploads are not allowed",
+      });
+    }
+
+    if (!allowedTypes.includes(fileType)) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({
+        success: false,
+        error: "File type not allowed",
+      });
+    }
+
+    if (req.file.size > 2 * 1024 * 1024) {
+      fs.unlinkSync(req.file.path);
+      return res.status(400).json({
+        success: false,
+        error: "File exceeds 2MB limit",
+      });
+    }
+
+    const isImage = fileType.startsWith("image/");
+    const timestamp = Date.now();
+    const originalName = req.file.originalname;
+    const fileBaseName = path
+      .basename(originalName, path.extname(originalName))
+      .replace(/\s+/g, "-")
+      .replace(/[^\w-]/g, "");
+
+    const uploadOptions = {
+      folder: isImage ? "images" : "documents",
+      public_id: `${fileBaseName}-${timestamp}`,
+      use_filename: true,
+      unique_filename: false,
+      overwrite: true,
+      ...(isImage
+        ? {
+            resource_type: "image",
+            quality: "auto:good",
+            format: "webp",
+          }
+        : {
+            resource_type: "raw",
+          }),
+    };
+
     try {
-      // Check if file is present
-      if (!req.file) {
-        return res.status(400).json({ message: "No file uploaded" });
+      const cloudinaryResponse = await uploadOnCloudinary(
+        req.file.path,
+        uploadOptions
+      );
+
+      if (!cloudinaryResponse?.secure_url) {
+        throw new Error("Cloudinary upload failed");
       }
 
-      // Validate file type
-      const allowedMimeTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/jpg",
-        "application/pdf",
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      ];
-      if (!allowedMimeTypes.includes(req.file.mimetype)) {
-        fs.unlinkSync(req.file.path);
-        return res.status(400).json({ message: "Invalid file type!" });
-      }
+      const fileUrl = cloudinaryResponse.secure_url;
 
-      // Validate file size
-      if (req.file.size > 2 * 1024 * 1024) {
-        fs.unlinkSync(req.file.path);
-        return res
-          .status(400)
-          .json({ message: "File size exceeds 2MB limit!" });
-      }
-
-      // Upload file to Cloudinary with optimization
-      let cloudinaryOptions = { resource_type: "auto" };
-      if (req.file.mimetype.startsWith("image/")) {
-        cloudinaryOptions = {
-          resource_type: "image",
-          format: "webp",
-          quality: "80",
-          width: 1000,
-        };
-      }
-
-      let cloudinaryResponse;
-      try {
-        cloudinaryResponse = await uploadOnCloudinary(
-          req.file.path,
-          cloudinaryOptions
-        );
-      } catch (err) {
-        console.error("Cloudinary Error:", err);
-        if (fs.existsSync(req.file.path)) {
-          fs.unlinkSync(req.file.path);  // Delete file only if it exists
-        }
-        return res.status(500).json({ message: "Cloudinary service error!" });
-      }
-
-      if (!cloudinaryResponse || !cloudinaryResponse.secure_url) {
-        if (fs.existsSync(req.file.path)) {
-          fs.unlinkSync(req.file.path);  // Delete file only if it exists
-        }
-        return res
-          .status(500)
-          .json({ message: "Failed to upload file on Cloudinary!" });
-      }
-
-      // Save the Cloudinary URL to DB
       const { documentType, description, isPhoto } = req.body;
-      const fileName = req.file.originalname;
 
-      if (isPhoto) {
-        req.user.general.photoUrl = cloudinaryResponse.secure_url;
+      if (isPhoto === "true" || isPhoto === true) {
+        req.user.general.photoUrl = fileUrl;
       } else {
-        // Validate required fields
         if (!documentType) {
-          fs.unlinkSync(req.file.path);
-          return res.status(400).json({ message: "Missing required fields!" });
+          return res.status(400).json({
+            success: false,
+            error: "Document type is required",
+          });
+        }
+
+        const docCount = req.user.attachments.filter(
+          (doc) => doc.documentType === documentType
+        ).length;
+
+        if (docCount >= 5) {
+          return res.status(400).json({
+            success: false,
+            error: `Maximum 5 documents allowed for ${documentType}`,
+          });
         }
 
         req.user.attachments.push({
           documentType,
-          attachmentUrl: cloudinaryResponse.secure_url,
-          publicId: cloudinaryResponse.public_id, // Store for future deletion
-          description,
-          fileName,
+          attachmentUrl: fileUrl,
+          publicId: cloudinaryResponse.public_id,
+          description: description || "",
+          fileName: originalName,
+          fileType: fileType,
         });
       }
 
       await req.user.save();
 
-      // Cleanup: Delete the local file after successful upload
-      if (fs.existsSync(req.file.path)) {
+      return res.status(200).json({
+        success: true,
+        message: "File uploaded successfully",
+        fileUrl: fileUrl,
+        publicId: cloudinaryResponse.public_id,
+      });
+    } catch (error) {
+      console.error("Upload Error:", error.message);
+
+      if (req.file?.path && fs.existsSync(req.file.path)) {
         fs.unlinkSync(req.file.path);
       }
 
-      // Send success response
-      res.status(200).json({
-        message: "File uploaded successfully",
-        fileUrl: cloudinaryResponse.secure_url,
+      return res.status(500).json({
+        success: false,
+        error: "File upload failed",
+        details: error.message,
       });
-    } catch (err) {
-      console.error("Error uploading file:", err);
-      handleErrors(err, res);
     }
   }
 );

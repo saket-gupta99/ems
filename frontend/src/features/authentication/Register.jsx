@@ -84,7 +84,7 @@ function Register() {
           className="p-1 text-base xs:text-xl bg-black text-white rounded-sm mt-3 hover:cursor-pointer hover:bg-gray-800 font-semibold"
           onClick={handleVerifyOtp}
         >
-          Register
+          Verify
         </button>
       )}
     </div>

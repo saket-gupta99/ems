@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLogin } from "./useLogin";
 import Spinner from "../../ui/Spinner";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -44,6 +45,10 @@ function LoginForm() {
         className="border border-gray-400 rounded-sm p-0.5 sm:p-1"
         placeholder="Enter password"
       />
+      <Link to="/forgot-password" className="text-blue-700 text-right">
+        Forgot Password?
+      </Link>
+
       <button
         type="submit"
         disabled={isLoading}

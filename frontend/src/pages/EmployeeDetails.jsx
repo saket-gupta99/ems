@@ -186,8 +186,8 @@ function EmployeeDetails({ employee }) {
                 name="dateOfLeaving"
                 className="w-full border border-gray-400 p-1 mb-2"
                 defaultValue={
-                  formatDateToISO(employee.general.dateOfLeaving) ||
-                  generalFormData.dateOfLeaving ||
+                  (employee.general.dateOfLeaving && formatDateToISO(employee.general?.dateOfLeaving)) ||
+                  generalFormData?.dateOfLeaving ||
                   ""
                 }
                 onChange={handleChange}
@@ -248,7 +248,7 @@ function EmployeeDetails({ employee }) {
               />{" "}
             </label>
           </div>
-          <SaveButton />
+          { <SaveButton />}
         </form>
       </div>
 

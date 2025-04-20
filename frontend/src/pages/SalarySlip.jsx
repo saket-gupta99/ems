@@ -25,20 +25,17 @@ function SalarySlip() {
         <MdRequestPage className="h-10 w-10 sm:h-8 sm:w-8" /> Salary Slip
       </h1>
       <div className="w-full p-5 shadow-2xl flex justify-center min-h-dvh">
-        <form
-          className="flex flex-col space-y-1.5"
-          onSubmit={handleSubmit}
-        >
+        <form className="flex flex-col space-y-1.5" onSubmit={handleSubmit}>
           <h1 className="text-xl font-semibold text-center my-5">
             Generate Payslip
           </h1>
+          <h3 className="font-semibold">Select a month with correct year</h3>
           <label>
             Payroll Month:
             <input
-              type="text"
+              type="date"
               name="payrollMonth"
               className="border p-1 ml-1 w-full sm:w-fit"
-              placeholder="give value like 'MM-YYYY'"
               value={payrollMonth || ""}
               onChange={(e) => setPayrollMonth(e.target.value)}
               required

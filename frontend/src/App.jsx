@@ -29,6 +29,8 @@ import GeneratedSlips from "./pages/GeneratedSlips";
 import ViewLeave from "./pages/ViewLeave";
 import AddLocation from "./pages/AddLocation";
 import EmployeeList from "./pages/EmployeeList";
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const queryClient = new QueryClient();
 
@@ -66,11 +68,13 @@ export default function App() {
             <Route path="generated-slips" element={<GeneratedSlips />} />
             <Route path="add-employee" element={<AddEmployee />} />
             <Route path="employee-list" element={<EmployeeList />} />
+            <Route path="reset-password" element={<ResetPassword />} />
           </Route>
 
           <Route path="home" element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="set-password" element={<SetPassword />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

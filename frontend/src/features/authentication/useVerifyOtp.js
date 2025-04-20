@@ -10,7 +10,7 @@ export function useVerifyOtp() {
     mutationFn: ({ data }) => verifyOtpAPI({ data }),
     onSuccess: (data) => {
       toast.success(data.message || "verified otp. Now set your password");
-      navigate("/set-password", { replace: true });
+      if (!data.isForgotPassword) navigate("/set-password", { replace: true });
     },
     onError: (err) => {
       toast.error(err.message || "failed verifying otp");

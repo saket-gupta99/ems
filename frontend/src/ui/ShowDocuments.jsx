@@ -3,83 +3,112 @@ import { useUser } from "../features/authentication/useUser";
 import FullScreenSpinner from "./FullScreenSpinner";
 import { FaFilePdf, FaFileWord, FaFileAlt } from "react-icons/fa";
 
-const getFileIcon = (url) => {
-  if (/\.pdf$/i.test(url))
-    return <FaFilePdf className="text-red-500 text-4xl" />;
-  if (/\.docx?$/i.test(url))
-    return <FaFileWord className="text-blue-500 text-4xl" />;
-  return <FaFileAlt className="text-gray-500 text-4xl" />;
+const getFileIcon = (attachment) => {
+  const url = attachment.attachmentUrl || "";
+  const fileType = attachment.fileType || ""; // Use stored mimetype if available
+  const fileName = attachment.fileName || ""; // Use stored filename if available
+
+  if (fileType === "application/pdf" || (!fileType && /\.pdf$/i.test(fileName)) || (!fileType && !fileName && /\.pdf/i.test(url))) {
+      return <FaFilePdf className="text-red-500 text-4xl" />;
+  }
+  if (fileType === "application/msword" || fileType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || (!fileType && /\.docx?$/i.test(fileName)) || (!fileType && !fileName && /\.docx?/i.test(url))) {
+      return <FaFileWord className="text-blue-500 text-4xl" />;
+  }
+  // Add more conditions here for other file types if needed
+  return <FaFileAlt className="text-gray-500 text-4xl" />; // Default icon
 };
+
 
 function ShowDocuments() {
   const { user, isLoading } = useUser();
   const [active, setActive] = useState(0);
-  const [documentType, setDocumentType] = useState("company letters");
+  const [documentType, setDocumentType] = useState("Company Letters");
 
-  if (isLoading || !user.data.attachments) {
+  if (isLoading) { 
     return <FullScreenSpinner />;
   }
 
-  const data = user.data.attachments.filter(
-    (el) => el.documentType === documentType
+  const attachments = user?.data?.attachments || [];
+  const data = attachments.filter(
+    (el) => el.documentType?.toLowerCase() === documentType.toLowerCase()
   );
+
+  const docTypes = [
+    "Company Letters",
+    "ID proofs",
+    "Education Certificates",
+    "Other",
+  ];
 
   return (
     <div className="p-2 w-full">
-      <div className="flex flex-wrap">
-        {[
-          "Company Letters",
-          "ID proofs",
-          "Education Certificates",
-          "Other",
-        ].map((el, ind) => (
+      <div className="flex flex-wrap border-b border-gray-300 mb-4">
+        {docTypes.map((el, ind) => (
           <button
             key={ind}
-            className={`${
-              active === ind ? "bg-gray-300" : ""
-            } px-2 p-1 cursor-pointer border border-gray-300`}
-            onClick={(e) => {
+            className={`px-3 py-2 mr-1 mb-1 text-sm hover:cursor-pointer font-medium focus:outline-none border border-b-0 rounded-t ${
+              active === ind
+                ? "bg-indigo-100 border-indigo-300 text-indigo-700" 
+                : "text-gray-600 hover:bg-gray-100 hover:text-gray-800 border-gray-300" 
+            }`}
+            onClick={() => { 
               setActive(ind);
-              setDocumentType(e.target.innerText.toLowerCase());
+              setDocumentType(el); 
             }}
           >
             {el}
           </button>
         ))}
       </div>
-      <div className="p-3 text-center flex justify-center mt-5">
-        {data.length > 0 &&
+      <div className="p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {data.length > 0 ? (
           data.map((el, id) => {
-            const isImage = /\.(jpeg|jpg|png|gif|bmp|webp)$/i.test(
-              el.attachmentUrl
-            );
+            // Check if it's an image based on stored file type primarily
+            const isImage = el.fileType?.startsWith("image/");
+            const displayFileName = el.fileName || "Download File";
 
             return (
-              <div key={id} className="border p-2 flex flex-col items-center">
+              <div
+                key={el.publicId || id} 
+                className="border border-gray-200 rounded-lg p-3 flex flex-col items-center text-center shadow hover:shadow-md transition-shadow duration-200"
+              >
                 {isImage ? (
-                  <img
-                    src={el.attachmentUrl}
-                    alt={el.fileName || "Uploaded Image"}
-                    className="w-40 h-40 object-cover border rounded"
-                  />
+                  <a href={el.attachmentUrl} target="_blank" rel="noopener noreferrer" title={`View image: ${displayFileName}`}>
+                    <img
+                      src={el.attachmentUrl}
+                      alt={el.description || displayFileName}
+                      className="w-32 h-32 object-cover border border-gray-300 rounded mb-2"
+                      loading="lazy" 
+                    />
+                  </a>
                 ) : (
                   <a
                     href={el.attachmentUrl}
-                    target="_blank"
+                    target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex flex-col items-center text-blue-500 underline"
+                    className="flex flex-col items-center text-center group"
+                    title={`Download ${displayFileName}`}
                   >
-                    {getFileIcon(el.attachmentUrl)}
-                    <span>{el?.fileName || "View Document"}</span>
+                    <div className="mb-2 transition-transform duration-200 group-hover:scale-110">
+                       {getFileIcon(el)}
+                    </div>
+                    <span className="text-xs text-gray-700 break-words w-full group-hover:text-indigo-600">
+                      {displayFileName}
+                    </span>
                   </a>
+                )}
+                {el.description && (
+                   <p className="text-xs text-gray-500 mt-1 w-full break-words">{el.description}</p>
                 )}
               </div>
             );
-          })}
-        {!data.length && (
-          <p className="bg-gray-600 text-white font-semibold rounded w-fit p-1">
-            No Documents Found
-          </p>
+          })
+        ) : ( 
+          <div className="col-span-full text-center py-10">
+            <p className="text-gray-500 font-semibold rounded w-fit p-2 mx-auto bg-gray-50 border">
+              No documents found for "{documentType}".
+            </p>
+          </div>
         )}
       </div>
     </div>

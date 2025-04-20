@@ -36,7 +36,7 @@ function ViewLeave() {
     return <FullScreenSpinner />;
   }
 
-  const data = getLeaveById.data.map((el) => formatData(el));
+  const data = getLeaveById.data.map((el) => formatData(el)).reverse();
 
   return (
     <>

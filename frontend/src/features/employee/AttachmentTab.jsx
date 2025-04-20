@@ -82,7 +82,7 @@ function AttachmentTab() {
             required
           />
           <span className="text-xs sm:text-sm text-slate-500">
-            pdf, jpg, jpeg, docx, png and doc file upto 2MB is allowed
+            jpg, jpeg, docx, png and doc file upto 2MB is allowed
           </span>
         </label>
 

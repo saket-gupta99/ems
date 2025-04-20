@@ -163,7 +163,7 @@ function AddEmployee() {
               />
             </label>
             <label>
-              Basic Salary:{" "}
+              Basic Salary*:{" "}
               <input
                 type="number"
                 name="basicSalary"

@@ -47,10 +47,11 @@ function EmployeesLeaves() {
     return <FullScreenSpinner />;
   }
 
-  const data = getLeaves.data.map((el) => formatData(el));
+  const data = getLeaves.data.map((el) => formatData(el)).reverse();
   const searchData = getLeaves.data
     .filter((el) => el.employeeId === currEmp)
-    .map((el) => formatData(el));
+    .map((el) => formatData(el))
+    .reverse();
 
   return (
     <>
