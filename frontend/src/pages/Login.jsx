@@ -7,7 +7,7 @@ function Login() {
   const [page, setPage] = useState("login");
 
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex relative justify-center items-center min-h-screen ">
       <div className="relative flex justify-center gap-2 items-center flex-col p-4 shadow-2xl xs:p-8 sm:p-10 md:p-12 rounded-md">
         <div className="absolute top-0 flex justify-evenly w-full font-bold bg-black text-white divide-x rounded-t-md">
           <button
@@ -20,7 +20,7 @@ function Login() {
             onClick={() => setPage("register")}
             className="text-xl p-3 sm:p-4 cursor-pointer w-full "
           >
-            Verify 
+            Verify
           </button>
         </div>
 
@@ -29,6 +29,17 @@ function Login() {
           {page === "login" ? "Login to your account" : "Verify your account"}
         </h1>
         {page === "login" ? <LoginForm /> : <Register />}
+      </div>
+
+      <div className="text-slate-800 text-sm absolute bottom-0 md:right-0 md:bottom-auto p-10 shadow-md space-y-5">
+        <div>
+          <p>Admin id: EMP1</p>
+          <p>Admin password: Saket@321</p>
+        </div>
+        <div>
+          <p>Employee id: EMP8</p>
+          <p>Employee password: Gaurav@123</p>
+        </div>
       </div>
     </div>
   );
