@@ -31,7 +31,7 @@ function Login() {
         {page === "login" ? <LoginForm /> : <Register />}
       </div>
 
-      <div className="text-slate-800 text-sm absolute bottom-0 md:right-0 md:bottom-auto p-10 shadow-md space-y-5">
+      <div className="text-slate-800 w-64 text-sm absolute bottom-0 md:right-0 md:bottom-auto p-10 shadow-md space-y-5">
         <div>
           <p>Admin id: EMP1</p>
           <p>Admin password: Saket@321</p>
