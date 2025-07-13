@@ -40,6 +40,7 @@ function Login() {
           <p>Employee id: EMP8</p>
           <p>Employee password: Gaurav@123</p>
         </div>
+        <p><em><strong>(You might need to wait around 50s for the server to start as it's hosted on free tier)</strong></em></p>
       </div>
     </div>
   );
